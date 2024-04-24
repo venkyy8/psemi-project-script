@@ -1,0 +1,26 @@
+﻿<Window x:Class="muRata.Views.PE106_7_CurrentSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:muRata.Views"
+        mc:Ignorable="d"
+        Title="PE106_7_CurrentSelector" Height="250" Width="400"  Background="#FFF3F1F1">
+    <Grid>
+        <Label Content="Select a current"  Margin = "70,65,202,0" VerticalAlignment = "Top" Width = "120" />
+
+        <ComboBox x:Name = "comboBox" HorizontalAlignment = "Left" 
+         Margin = "177,65,0,0" VerticalAlignment = "Top" Width = "120"
+         >
+
+            <ComboBoxItem Content = "6A"  />
+            <ComboBoxItem Content = "8A" IsSelected="True"/>
+            <ComboBoxItem Content = "12A" />
+        </ComboBox>
+
+        <Button x:Name = "button" Content = "Select"
+         HorizontalAlignment = "Left" Margin = "143,128,0,0"
+         VerticalAlignment = "Top" Width = "75"/>
+
+    </Grid>
+</Window>

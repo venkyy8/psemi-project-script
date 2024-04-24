@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application>
+	<Config>
+		<TriggeredReadDelayMs>10</TriggeredReadDelayMs>
+	</Config>
+	<Devices>
+		<!-- pSemi -->
+		<Device MfrId="pSemi" Model="ARC1C0608" Revision="2" Code="A5" Key = "1" Plugin="ARC1C0608-R02" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="ARC2C0608" Revision="2" Code="A5" Key = "2" Plugin="ARC2C0608-R02" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="ARC3C0845" Revision="1" Code="A5" Key = "3" Plugin="ARC3C0845-R01" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="ARC2CC06" Revision="3" Code="A5" Key = "4" Plugin="PE24101-102" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="PE26100" Revision="3" Code="95" Key = "26" Plugin="PE26100" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="VADER" Revision="" Code="95" Key = "22" Plugin="VADER" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="PE24106-PE24107" Revision="1" Code="A5" Key = "13" Plugin="PE24106-R01" Protocol="I2C" />		
+		<Device MfrId="pSemi" Model="PE23108" Revision="1" Code="A5" Key = "12" Plugin="PE23108-R01" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="PE25202" Revision="1" Code="95" Key = "9" Plugin="PE25202-R01" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="PE24103" Revision="" Code="95" Key ="11" Plugin="PE24103-R01" Protocol="I2C" />
+		<Device MfrId="pSemi" Model="PE24104" Revision="" Code="95" Key ="16" Plugin="PE24104-R01" Protocol="I2C" />
+		<Device MfrId="A5" Model="0B" Revision="" Code="" Key ="-1" Plugin="PE24103-R01" Protocol="PMB" />
+		<Device MfrId="A5" Model="0B" Revision="" Code="" Key ="-1" Plugin="PE24104-R01" Protocol="PMB" />
+		<!-- muRata -->
+		<Device MfrId="MPS" Model="MPQ8645P" Revision="0" Code="160202" Key = "-1" Plugin="MYMGM1R824ELA5RA-R01" Protocol="PMB" />
+		<Device MfrId="MPS" Model="MPQ8645P" Revision="0" Code="180000" Key = "-1" Plugin="MYMGM1R824ELA5RA-R01" Protocol="PMB" />
+		<Device MfrId="MPS" Model="MPQ8645P" Revision="0" Code="16000>" Key = "-1" Plugin="MYMGM1R824ELA5RA-R01" Protocol="PMB" />
+		<Device MfrId="MPS" Model="MPQ8645P" Revision="0" Code="160501" Key = "-1" Plugin="MYMGM1R824ELA5RP-R01" Protocol="PMB" />
+		<Device MfrId="MPS" Model="MPQ8645P" Revision="0" Code="160300" Key = "-1" Plugin="MYMGM1R816ELA5RA-R01" Protocol="PMB" />		
+		<Device MfrId="MPS" Model="MYWGC3R53FFW92RA" Revision="1" Code="" Key = "128" Plugin="MYWGC3R53FFW92RA-R01" Protocol="I2C" />
+	</Devices>
+	<IdentityRegisters>
+		<!-- I2C Devices -->
+	    <Setting RegCode="1F" RegId="1E" Mask="FF" Shift="0"/>	<!-- pSemi -->
+	    <Setting RegCode="FF" RegId="FE" Mask="FF" Shift="0"/>	<!-- pSemi -->
+		<Setting RegCode="FB" RegId="FA" Mask="FF" Shift="0"/>	<!-- pSemi -->
+		<Setting RegCode="" RegId="29" Mask="F0" Shift="0"/>	<!-- muRata -->
+	</IdentityRegisters>
+	<IdentityRegisterTwoBytes>
+		<!-- I2C 16 BIT Devices -->
+		<TwoBytesSetting RegCode="3FF" RegId="3FE" Mask="FF" Shift="0"/>	<!-- pSemi -->
+	</IdentityRegisterTwoBytes>
+</Application>

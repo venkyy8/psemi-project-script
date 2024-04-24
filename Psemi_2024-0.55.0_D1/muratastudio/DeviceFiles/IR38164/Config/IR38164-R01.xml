@@ -1,0 +1,1215 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Device>
+  <FileInformation>
+    <Version>1</Version>
+    <Date>12/13/2019</Date>
+  </FileInformation>
+  <DeviceId>
+    <Name>IR38164</Name>
+    <Version>1.00</Version>
+    <BaseName>IR38164</BaseName>
+  </DeviceId>
+  <UI>
+    <Panels>
+	  <Panel Name="Control" Orientation="Vertical">
+		<List Label="Operation" Map="OPERATION" Mask="0xFF" Description="The OPERATION command is used to turn the converter output on or off in conjunction with the input from the CTRL pin.">			
+			<Option Label="Immediate Off" Value="0" />
+			<Option Label="On - Margin State OFF" Value="128" />
+			<Option Label="On - Margin State Low (Ignore Fault)" Value="148" />
+			<Option Label="On - Margin State Low (Act on Fault)" Value="152" />
+			<Option Label="On - Margin State High (Ignore Fault)" Value="164" />
+			<Option Label="On - Margin State High (Act on Fault)" Value="168" />
+		</List>
+		<SendButton Label="Clear Faults" Map="CLEAR_FAULTS" Description="The CLEAR_FAULTS command is used to reset all stored warning and fault flags. See datasheet for additional details." />		
+	  </Panel>
+		  
+	  <Panel Name="Soft Start" Orientation="Vertical">
+		<AutoList Label="Time ON Delay" Map="TON_DELAY" Mask="0xFF" InitValue="1020" Step="4" Unit="ms" Format="N0" Direction="DSC" Description="The TON_DELAY command sets the time (in ms), from when a start condition is received (as programmed by the ON_OFF_CONFIG command) until the output voltage starts to rise." />
+		<List Label="Time ON Rise" Map="TON_RISE" Mask="0x0F" Description="The TON_RISE command sets the soft-start time (in ms) from when the output starts to rise until the voltage has reached the regulation point.">			
+			<Option Label="8ms" Value="4" />
+			<Option Label="4ms" Value="3" />
+			<Option Label="3ms" Value="2" />
+			<Option Label="2ms" Value="1" />
+			<Option Label="1ms" Value="0" />
+		</List>
+	  </Panel>		  
+		  
+	  <Panel Name="On - Off Configuration" Orientation="Vertical">
+		<List Label="ON Bit" Map="ON_OFF_CONFIG" Mask="0x10" Description="This on bit sets the default to either operate whenever the input voltage is present or for the on/off to be controlled by CTRL and PMBusTM commands.">			
+			<Option Label="Converter Powers Up" Value="0" />
+			<Option Label="Converter Does Not" Value="1" />
+		</List>		
+		<List Label="OP Bit" Map="ON_OFF_CONFIG" Mask="0x08" Description="This op bit controls how the converter responds to the OPERATION commands.">			
+			<Option Label="Converter Ignores" Value="0" />
+			<Option Label="Converter Responds" Value="1" />
+		</List>	
+		<List Label="Control Bit" Map="ON_OFF_CONFIG" Mask="0x04" Description="This ctrl bit controls how the converter responds to the CTRL pin.">			
+			<Option Label="Converter Ignores" Value="0" />
+			<Option Label="Converter Requires" Value="1" />
+		</List>
+		<!--
+		<List Label="Polarity Bit" Map="ON_OFF_CONFIG" Mask="0x02" Description="This pol_ctrl bit sets the polarity of the CTRL pin.">			
+			<Option Label="Active Low" Value="0" />
+			<Option Label="Active High" Value="1" />
+		</List>
+		-->
+	  </Panel>
+	  
+      <Panel Name="Output Voltage" Orientation="Vertical">
+	  	<Label Content="Settings" Align="Left" />
+			<AutoList Label="Output" Map="VOUT_COMMAND" Mask="0xFFF" InitValue="8.190" Step="0.002" Unit="V" Format="F3" Direction="DSC" Description="Configures output voltage." />		
+			<AutoList Label="Min" Map="VOUT_MIN" Mask="0xFFF" InitValue="8.190" Step="0.002" Unit="V" Format="F3" Direction="DSC" Private="True" Description="sets an lower limit on the output voltage." />
+			<AutoList Label="Max" Map="VOUT_MAX" Mask="0xFFF" InitValue="8.190" Step="0.002" Unit="V" Format="F3" Direction="DSC" Private="True" Description="Sets an upper limit on the output voltage." />
+			<AutoList Label="Margin Low" Map="VOUT_MARGIN_LOW" Mask="0xFFF" InitValue="8.190" Step="0.002" Unit="V" Format="F3" Private="False" Direction="DSC" Description="See datasheet" />
+			<AutoList Label="Margin High" Map="VOUT_MARGIN_HIGH" Mask="0xFFF" InitValue="8.190" Step="0.002" Unit="V" Format="F3" Private="False" Direction="DSC" Description="See datasheet" />
+			<AutoList Label="Scale Loop" Map="VOUT_SCALE_LOOP" Mask="0xFFF" InitValue="4.095" Step="0.001" Unit="" Format="F3" Direction="DSC" Description="See datasheet" />
+		<Label Content="Status" Align="Left" />
+			<BitStatus Label="OV_FAULT" Map="STATUS_VOUT|VOUT_OV_FAULT" Description="Over Voltage Fault" />			
+			<BitStatus Label="UV_FAULT" Map="STATUS_VOUT|VOUT_UV_FAULT" Description="Under Voltage Fault" />	
+			<BitStatus Label="MIN_MAX" Map="STATUS_VOUT|VOUT_MAX_MIN" Description="" />	
+      </Panel>
+	  
+	  <Panel Name="Input Voltage" Orientation="Vertical">
+		<Label Content="Settings" Align="Left" />
+			<AutoList Label="ON" Map="VIN_ON" Mask="0x3F" InitValue="15.75" Step="0.250" Unit="V" Format="F2" Direction="DSC" Description="" />
+			<AutoList Label="OFF" Map="VIN_OFF" Mask="0x3F" InitValue="15.75" Step="0.250" Unit="V" Format="F2" Direction="DSC" Description="" />
+		<Label Content="Limits" Align="Left" />
+			<AutoList Label="OV Warn" Map="VIN_OV_WARN_LIMIT" Mask="0x3F" InitValue="31.5" Step="0.5" Unit="V" Format="F1" Direction="DSC" Description="The VIN_OV_WARN_LIMIT setting value should not be higher than 18V." />
+			<AutoList Label="UV Warn" Map="VIN_UV_WARN_LIMIT" Mask="0x3F" InitValue="15.75" Step="0.250" Unit="V" Format="F2" Direction="DSC" Description="The VIN_UV_WARN_LIMIT setting value should be higher than 3.3V." />
+			<AutoList Label="OV Fault" Map="VIN_OV_FAULT_LIMIT" Mask="0x3F" InitValue="31.5" Step="0.5" Unit="V" Format="F1" Private="True" Direction="DSC" Description="The VIN_OV_FAULT_LIMIT setting value should not be higher than 18V." />
+		<Label Content="Status" Align="Left" />	
+			<BitStatus Label="OV_WARN" Map="STATUS_INPUT|VIN_OV_WARN" Description="Over Voltage Warning" />	
+			<BitStatus Label="UV_WARN" Map="STATUS_INPUT|VIN_UV_WARN" Description="Under Voltage Warning" />				
+			<BitStatus Label="OV_FAULT" Map="STATUS_INPUT|VIN_OV_FAULT" Description="Over Voltage Fault" />		
+	  </Panel>
+	  
+	  <Panel Name="Output Current" Orientation="Vertical">
+		<Label Content="Limits" Align="Left" />		
+			<AutoList Label="OC Warn" Map="IOUT_OC_WARN_LIMIT" Mask="0xFF" InitValue="61.710" Step="0.242" Unit="A" Format="F3" Direction="DSC" Description="See datasheet" />
+			<AutoList Label="OC Fault" Map="IOUT_OC_FAULT_LIMIT" Mask="0xFF" InitValue="61.710" Step="0.242" Unit="A" Format="F3" Private="True" Direction="DSC" Description="See datasheet" />
+		<Label Content="Status" Align="Left" />
+			<BitStatus Label="OC_WARN" Map="STATUS_IOUT|IOUT_OC_WARN" Description="Over Current Warning" />
+			<BitStatus Label="OC_FAULT" Map="STATUS_IOUT|IOUT_OC" Description="Over Current Fault" />			
+			<BitStatus Label="OC_VOUT_UV" Map="STATUS_IOUT|OC+VOUT_UV" Description="Over Current and Under VOUT Fault" />			
+	  </Panel>
+	  
+	  <Panel Name="Temperature" Orientation="Vertical">
+		<Label Content="Limits" Align="Left" />		
+			<AutoList Label="OT Warn" Map="OT_WARN_LIMIT" Mask="0xFF" InitValue="255" Step="1" Unit="&#176;C" Format="N0" Direction="DSC" Description="See datasheet" />
+			<AutoList Label="OT Fault" Map="OT_FAULT_LIMIT" Mask="0xFF" InitValue="255" Step="1" Unit="&#176;C" Format="N0" Private="True" Direction="DSC" Description="See datasheet" />
+		<Label Content="Status" Align="Left" />
+			<BitStatus Label="OT_WARN" Map="STATUS_TEMPERATURE|OT_WARN" Description="Over Temperature Warning" />
+			<BitStatus Label="OT_FAULT" Map="STATUS_TEMPERATURE|OT_FAULT" Description="Over Temperature Fault" />			
+	  </Panel>
+	  
+	  <Panel Name="Status" Orientation="Horizontal">
+			<BitStatus Label="POWER_GOOD" Map="STATUS_WORD|POWER_GOOD" OnBackColor="#FF75df4a" OnForeColor="#FF000000" Description="" />
+			<BitStatus Label="OFF" Map="STATUS_BYTE|OFF" OnBackColor="#FF75df4a" OnForeColor="#FF000000" Description="" />			
+			<BitStatus Label="VOUT_STATUS" Map="STATUS_WORD|VOUT_STATUS" Description="" />			
+			<BitStatus Label="IOUT_STATUS" Map="STATUS_WORD|IOUT_STATUS" Description="" />			
+			<BitStatus Label="VIN_STATUS" Map="STATUS_WORD|VIN_STATUS" Description="" />
+			<BitStatus Label="MFR_STATUS" Map="STATUS_WORD|MFR_STATUS" Description="" />
+			<BitStatus Label="COMM_ERROR" Map="STATUS_BYTE|COMM_ERROR" Description="" />			
+			<BitStatus Label="INVALID_COMMAND" Map="STATUS_CML|INVALID_COMMAND" Description="" />
+			<BitStatus Label="INVALID_DATA" Map="STATUS_CML|INVALID_DATA" Description="" />
+			<BitStatus Label="OTHER_FAULT" Map="STATUS_CML|OTHER_FAULT" Description="" />			
+			<BitStatus Label="MEMORY_BUSY" Map="STATUS_CML|MEMORY_BUSY" Description="" />					
+			<BitStatus Label="MEMORY_FAULT" Map="STATUS_CML|MEMORY_FAULT" Description="" />			
+			<BitStatus Label="NONE_OF_THE_ABOVE" Map="STATUS_BYTE|NONE_OF_THE_ABOVE" Description="" />			
+	  </Panel>	
+    </Panels>
+  </UI>
+  <Registers>
+	<!-- ======================================================================== -->
+	<!-- User Section -->
+	<!-- ======================================================================== -->  
+    <Register Name="PMBUS_ADDR" Address="0x20" DataType="H" Access="RWByte" Size="1" LockBitMask="0x7F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="PMBus base address">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="PMBusAddr6" Description="Bit6"/>
+      <Bit Mask="0x0020" Name="PMBusAddr5" Description="Bit5"/>
+      <Bit Mask="0x0010" Name="PMBusAddr4" Description="Bit4"/>
+      <Bit Mask="0x0008" Name="PMBusAddr3" Description="Bit3"/>
+      <Bit Mask="0x0004" Name="PMBusAddr2" Description="Bit2"/>
+      <Bit Mask="0x0002" Name="PMBusAddr1" Description="Bit1"/>
+      <Bit Mask="0x0001" Name="PMBusAddr0" Description="Bit0"/>
+    </Register> 
+    <Register Name="I2C_ADDR" Address="0x21" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="I2C control">
+      <Bit Mask="0x0080" Name="I2cDisableOffset" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="I2cAddr6" Description="Bit6"/>
+      <Bit Mask="0x0020" Name="I2cAddr5" Description="Bit5"/>
+      <Bit Mask="0x0010" Name="I2cAddr4" Description="Bit4"/>
+      <Bit Mask="0x0008" Name="I2cAddr3" Description="Bit3"/>
+      <Bit Mask="0x0004" Name="I2cAddr2" Description="Bit2"/>
+      <Bit Mask="0x0002" Name="I2cAddr1" Description="Bit1"/>
+      <Bit Mask="0x0001" Name="I2cAddr0" Description="Bit0"/>
+    </Register>  	
+    <Register Name="OPERATION" Address="0x22" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="The value of the OPERATION PMBus command">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="ON_OFF_CONFIG" Address="0x23" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="The value of the ON_OFF_CONFIG PMBus command">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_COMMAND_MSB" Address="0x24" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_COMMAND_LSB" Address="0x25" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_TRIM_MSB" Address="0x26" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_TRIM_LSB" Address="0x27" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_MAX_MSB" Address="0x28" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_MAX_LSB" Address="0x29" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VOUT_MARGIN_HIGH_MSB" Address="0x2A" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_MARGIN_HIGH_LSB" Address="0x2B" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VOUT_MARGIN_LOW_MSB" Address="0x2C" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_MARGIN_LOW_LSB" Address="0x2D" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="V" ReadOnly="False" Private="False" LoadFormula="X * 0.00390625" StoreFormula="X / 0.00390625" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VOUT_TRANS_RATE_MSB" Address="0x2E" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_TRANS_RATE_LSB" Address="0x2F" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="VOUT_SCALE_LOOP_MSB" Address="0x30" DataType="F" Access="RByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_SCALE_LOOP_LSB" Address="0x31" DataType="F" Access="RWByte" Size="1" LockBitMask="0xFF" Format="F3" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="FREQ_SWITCH_MSB" Address="0x32" DataType="H" Access="RByte" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="FREQ_SWITCH_LSB" Address="0x33" DataType="H" Access="RByte" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="VIN_ON_MSB" Address="0x34" DataType="H" Access="RWByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VIN_ON_LSB" Address="0x35" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="VIN_OFF_MSB" Address="0x36" DataType="H" Access="RWByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VIN_OFF_LSB" Address="0x37" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="IOUT_CAL_OFFSET_MSB" Address="0x38" DataType="H" Access="RWByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="IOUT_CAL_OFFSET_LSB" Address="0x39" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_OV_FAULT_LIMIT_MSB" Address="0x3A" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VOUT_OV_FAULT_LIMIT_LSB" Address="0x3B" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_OV_FAULT_RESPONSE" Address="0x3C" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_OV_WARN_LIMIT_MSB" Address="0x3D" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VOUT_OV_WARN_LIMIT_LSB" Address="0x3E" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_UV_WARN_LIMIT_MSB" Address="0x3F" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VOUT_UV_WARN_LIMIT_LSB" Address="0x40" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_UV_FAULT_LIMIT_MSB" Address="0x41" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VOUT_UV_FAULT_LIMIT_LSB" Address="0x42" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="VOUT_UV_FAULT_RESPONSE" Address="0x43" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="IOUT_OC_FAULT_LIMIT_MSB" Address="0x44" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="IOUT_OC_FAULT_LIMIT_LSB" Address="0x45" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+	<Register Name="IOUT_OC_FAULT_RESPONSE" Address="0x46" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="IOUT_OC_WARN_LIMIT_MSB" Address="0x47" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="IOUT_OC_WARN_LIMIT_LSB" Address="0x48" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="OT_FAULT_LIMIT_MSB" Address="0x49" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="OT_FAULT_LIMIT_LSB" Address="0x4A" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="OT_FAULT_RESPONSE" Address="0x4B" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="OT_WARN_LIMIT_MSB" Address="0x4C" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="OT_WARN_LIMIT_LSB" Address="0x4D" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VIN_OV_FAULT_LIMIT_MSB" Address="0x4E" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VIN_OV_FAULT_LIMIT_LSB" Address="0x4F" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="VIN_OV_FAULT_RESPONSE" Address="0x50" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="VIN_UV_WARN_LIMIT_MSB" Address="0x51" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VIN_UV_WARN_LIMIT_LSB" Address="0x52" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="POWER_GOOD_ON_MSB" Address="0x53" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="POWER_GOOD_ON_LSB" Address="0x54" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="POWER_GOOD_OFF_MSB" Address="0x55" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="POWER_GOOD_OFF_LSB" Address="0x56" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TON_DELAY_MSB" Address="0x57" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TON_DELAY_LSB" Address="0x58" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TON_RISE_MSB" Address="0x59" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TON_RISE_LSB" Address="0x5A" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="TON_MAX_FAULT_MSB" Address="0x5B" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TON_MAX_FAULT_LSB" Address="0x5C" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="TON_MAX_FAULT_RESPONSE_LSB" Address="0x5D" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="TOFF_DELAY_MSB" Address="0x5E" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TOFF_DELAY_LSB" Address="0x5F" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="TOFF_FALL_MSB" Address="0x60" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TOFF_FALL_LSB" Address="0x61" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+	<!-- ======================================================================== -->
+	<!-- ASCII Registers read in reverse order LSB - MSB -->
+	<!-- ======================================================================== -->
+    <Register Name="MFR_ID_LSB" Address="0x64" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="MFR_ID_MSB" Address="0x65" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="MFR_MODEL_0" Address="0x6B" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="MFR_MODEL_1" Address="0x6C" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="MFR_MODEL_2" Address="0x6D" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="MFR_REVISION_0" Address="0x6E" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="MFR_REVISION_1" Address="0x6F" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="MFR_REVISION_2" Address="0x70" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+	<!-- ======================================================================== -->
+	<!-- Excel Design Tool ? -->
+	<!-- ======================================================================== -->
+    <Register Name="POLE_RISING_L" Address="0x73" DataType="H" Access="RWByte" Size="1" LockBitMask="0x7F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="POLE_RISING_H" Address="0x74" DataType="H" Access="RWByte" Size="1" LockBitMask="0x7F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="SVID" Address="0x75" DataType="H" Access="RWByte" Size="1" LockBitMask="0x7F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="PMBUS_MODE" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="ALL_CALL_0E" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="ALL_CALL_0F" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="LOCAL_ADDR3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="LOCAL_ADDR2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="LOCAL_ADDR1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="LOCAL_ADDR0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="VBOOT" Address="0x76" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="SVID_VOUT_MAX" Address="0x79" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="SVID_ICC_MAX" Address="0x7A" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="SVID_PWR_IN_MAX" Address="0x7B" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="SVID_CONFIG1" Address="0x7C" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="SLEW_RATE_DFLT1" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="SLEW_RATE_DFLT0" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TEMP_MAX5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TEMP_MAX4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TEMP_MAX3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TEMP_MAX2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TEMP_MAX1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TEMP_MAX0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="SVID_VOUT_OFFSET" Address="0x7D" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="USER_TEMP_OFFSET" Address="0x7F" DataType="H" Access="RWByte" Size="1" LockBitMask="0x3F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="POLE_RISING_H" Address="0x80" DataType="H" Access="RWByte" Size="1" LockBitMask="0x3F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="SLEW_RATE_SLOW5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="SLEW_RATE_SLOW4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="SLEW_RATE_FAST3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="SLEW_RATE_FAST2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="SLEW_RATE_FAST1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="SLEW_RATE_FAST0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="VID" Address="0x83" DataType="H" Access="RWByte" Size="1" LockBitMask="0x80" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="VID_STEP_SEL" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="Reserved" Description="Reserved"/>
+    </Register>		
+    <Register Name="SVID_CONFIG2" Address="0x85" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="VOUT_PG_OFFSET_SEL1" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="VOUT_PG_OFFSET_SEL0" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="ZERO_CENTER_H5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="ZERO_CENTER_H4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="ZERO_CENTER_H3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="ZERO_CENTER_H2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="ZERO_CENTER_H1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="ZERO_CENTER_H0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="SVID_CONFIG3" Address="0x86" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="ZERO_CENTER_I7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="ZERO_CENTER_I6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="ZERO_CENTER_I5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="ZERO_CENTER_I4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="ZERO_CENTER_I3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="ZERO_CENTER_I2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="ZERO_CENTER_I1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="ZERO_CENTER_I0" Description="See datasheet"/>
+    </Register>	
+	<!-- ======================================================================== -->
+	<!-- Manufacturer Section -->
+	<!-- ======================================================================== -->
+    <Register Name="MFG_CONFIG1" Address="0x8E" DataType="H" Access="RWByte" Size="1" LockBitMask="0x01" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="OTP_CLK_EN" Description="See datasheet"/>
+    </Register>	
+	<!-- ======================================================================== -->
+	<!-- Read-Only Section -->
+	<!-- ======================================================================== -->
+    <Register Name="RO_VOLTAGE" Address="0x91" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="V12_SUPPLY7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="V12_SUPPLY6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="V12_SUPPLY5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="V12_SUPPLY4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="V12_SUPPLY3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="V12_SUPPLY2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="V12_SUPPLY1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="V12_SUPPLY0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RO_VOUT_MSB" Address="0x92" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RO_VOUT_LSB" Address="0x93" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RO_TEMPERATURE" Address="0x94" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RO_FAIL_CODE_NONSTICK" Address="0x95" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RO_FAIL_CODE_STICK" Address="0x96" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>
+    <Register Name="RO_OTP_STATUS" Address="0x97" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_STATE4" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_STATE3" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_STATE2" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_STATE1" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_STATE0" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TRIM_CRC_FLAG" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="USR_CRC_FLAG" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="MFR_CRC_FLAG" Description="See datasheet"/>
+    </Register>		
+    <Register Name="RO_OTP_CONFIG1" Address="0x98" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="GPR_RO1" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="GPR_RO0" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_TRIM2" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_TRIM_PTR1" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_TRIM_PTR0" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_MFR_PTR2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_MFR_PTR1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_MFR_PTR0" Description="See datasheet"/>
+    </Register>			
+    <Register Name="RO_OTP_CONFIG2" Address="0x99" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_LOADED" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="OTP_USR_PTR3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_USR_PTR2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_USR_PTR1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_USR_PTR0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RO_USR_CRC" Address="0x9A" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RO_CURRENT_IN" Address="0x9C" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="RO_CURRENT_OUT" Address="0xA3" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+	<!-- ======================================================================== -->
+	<!-- Read-Write Section -->
+	<!-- ======================================================================== -->
+    <Register Name="RW_CMD" Address="0xB0" DataType="H" Access="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="RW_CODES_CONFIG" Address="0xB3" DatReservedcess="RWByte" Size="1" LockBitMask="0xFF" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="CLR_STICKY_CODES" Description="See datasheet"/>
+    </Register>		
+	<!-- ======================================================================== -->
+	<!-- User Read-Only Section -->
+	<!-- ======================================================================== -->
+    <Register Name="URO_SILICON_VER" Address="0xFA" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="URO_PRODUCT_ID" Address="0xFB" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="URO_MFR_ID_LSB" Address="0xFC" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="URO_MFR_ID_MSB" Address="0xFD" DataType="H" Access="RByte" Size="1" LockBitMask="0x00" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Bit7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Bit6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Bit5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Bit4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Bit3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Bit2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Bit1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Bit0" Description="See datasheet"/>
+    </Register>	
+  </Registers>
+</Device>

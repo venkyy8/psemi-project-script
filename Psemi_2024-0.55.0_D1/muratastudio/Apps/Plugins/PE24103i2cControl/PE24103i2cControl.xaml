@@ -1,0 +1,940 @@
+﻿<UserControl x:Class="PE24103i2cControl.PE24103i2cControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:local="clr-namespace:PE24103i2cControl.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="800" Background="White" >
+
+    <UserControl.Resources>
+        <ResourceDictionary  Source="Resources\Styles.xaml"/>
+    </UserControl.Resources>
+
+    <Grid Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="ProgressBarGrid"  Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Masthead -->
+        <DockPanel Margin="10,0,10,0" LastChildFill="True">
+            
+            <Label x:Name="lblTitle"
+                   Content="{Binding DisplayName, Mode=OneWay}"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Foreground="#660000" />
+
+            <Separator Margin="5,10,5,10">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+            
+            <!--<Button x:Name="btnRefresh" VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Command="{Binding RefreshCommand}" IsEnabled="{Binding RefreshEnable}" Click="btnRefresh_Click">
+                <Image Source="Images/Refresh16.png" Width="16" Height="16" ToolTip="Refresh mapped registers in device tab UI"/>
+            </Button>
+
+            <Button x:Name="btnPoll" VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}" Command="{Binding TogglePollingCommand}" Click="btnPoll_Click">
+                <Image Width="16" Height="16" ToolTip="Poll">
+                    <Image.Style>
+                        <Style>
+                            <Setter Property="Image.Source" Value="{StaticResource PollOff}"/>
+                            <Setter Property="Image.Stretch" Value="Uniform"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PollingState}" Value="0">
+                                    <Setter Property="Image.Source" Value="{StaticResource PollOff}"/>
+                                    <Setter Property="Image.Stretch" Value="Uniform"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PollingState}" Value="1">
+                                    <Setter Property="Image.Source" Value="{StaticResource PollOn}"/>
+                                    <Setter Property="Image.Stretch" Value="Uniform"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PollingState}" Value="2">
+                                    <Setter Property="Image.Source" Value="{StaticResource PollPolling}"/>
+                                    <Setter Property="Image.Stretch" Value="Uniform"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PollingState}" Value="3">
+                                    <Setter Property="Image.Source" Value="{StaticResource PollError}"/>
+                                    <Setter Property="Image.Stretch" Value="Uniform"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </Button>-->
+            
+            <Button Command="{Binding LoadRegisterCommand, Mode=OneWay}"
+                    VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}">
+                <Image Source="Images/Open_16.png" Width="16" Height="16" ToolTip="Load Register Map"/>
+            </Button>
+
+            <Button Command="{Binding SaveRegisterCommand, Mode=OneWay}"
+                    VerticalAlignment="Center" Width="25" Height="25" Background="{x:Null}" BorderBrush="{x:Null}">
+                <Image Source="Images/Save_16.png" Width="16" Height="16" ToolTip="Save Register Map"/>
+            </Button>
+
+            <Image Source="Images/logowave_xsm-muRata.png" DockPanel.Dock="Right" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="278" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.3*"/>
+                </Grid.RowDefinitions>
+
+                <fa:ImageAwesome Grid.Row="0" Icon="Spinner" Spin="True" IsVisibleChanged="ImageAwesome_IsVisibleChanged"                         
+                             VerticalAlignment="Center" 
+                             HorizontalAlignment="Center"  Visibility="{Binding IsAllRegistersRead, Converter={StaticResource InverseBoolToVisibilityConverter} }"
+                             RenderTransformOrigin="0.5,0.5" Height="50" Width="50" Grid.Column="1" />
+
+                <TextBlock Grid.Row="1"  Text="Reading Register Values" 
+                   VerticalAlignment="Center"  Visibility="{Binding IsAllRegistersRead, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                   FontSize="14" FontWeight="Bold" 
+                   TextAlignment="Center"
+                   FontStyle="Italic"/>
+            </Grid>
+            
+        </DockPanel>
+        
+        <TabControl x:Name="PE24103TabControl" Grid.Row="1" Grid.RowSpan="2">
+            
+            <TabItem Header="Configuration 1" x:Name="Config1" Visibility="{Binding IsConfig1}" IsSelected="{Binding IsSelected1}" >
+                <ScrollViewer Margin="0,10,0,0">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!--<MediaElement x:Name="media" Grid.Column="0" Grid.Row="0" 
+                                      Grid.ColumnSpan="4"
+                                      Visibility="{Binding IsLoadingEnded}" 
+                                      VerticalAlignment="Center" HorizontalAlignment="Center" MediaEnded="media_MediaEnded"
+                                      Width="150" Height="150" UnloadedBehavior="Manual">
+                        </MediaElement>-->
+
+                        <GroupBox Header="Buck1" 
+                                  IsEnabled="{Binding IsAllRegistersRead}"  
+                                  Grid.Row="0" 
+                                  Grid.Column="0"
+                                  Margin="5,0,5,0"
+                                  FontWeight="Normal"
+                                  Foreground="#000">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="Buck1Panel"
+                                    ItemsSource="{Binding Buck1Controls}"
+                                    ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+
+                        <GroupBox Header="Buck2" 
+                                    IsEnabled="{Binding IsAllRegistersRead}"  
+                                    Grid.Row="0" 
+                                    Grid.Column="1"
+                                    Margin="5,0,5,0"
+                                    FontWeight="Normal"
+                                    Foreground="#000">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="Buck2Panel" 
+                                          ItemsSource="{Binding Buck2Controls}"
+                                          ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+
+                        <GroupBox Header="Telemetry"
+                                    IsEnabled="{Binding IsAllRegistersRead}"  
+                                    Grid.Row="0" Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    Margin="5,0,5,0"
+                                    FontWeight="Normal"
+                                    Foreground="#000">
+
+                            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.7*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <Label x:Name="vinLabel" Grid.Row="0" Content="VIN"/>
+                                <Label x:Name="IINLabel" Grid.Row="1" Content="IIN"/>
+                                <Label x:Name="VXLabel" Grid.Row="2" Content="VX"/>
+                                <Label x:Name="vout1Label" Grid.Row="3" Content="VOUT1"/>
+                                <Label x:Name="iiout1Label" Grid.Row="4" Content="IOUT1"/>
+                                <Label x:Name="vout2Label" Grid.Row="5" Content="VOUT2"/>
+                                <Label x:Name="iiout2Label" Grid.Row="6" Content="IOUT2"/>
+                                <Label x:Name="vout3Label" Grid.Row="7" Content="VOUT3"/>
+                                <Label x:Name="iiout3Label" Grid.Row="8" Content="IOUT3"/>
+                                <Label x:Name="vout4Label" Grid.Row="9" Content="VOUT4"/>
+                                <Label x:Name="iiout4Label" Grid.Row="10" Content="IOUT4"/>
+                                <Label x:Name="tempLabel" Grid.Row="11" Content="TEMP"/>
+
+                                <ContentPresenter x:Name="C1VinPresenter"         Grid.Row="0" Grid.Column="1"/>
+                                <ContentPresenter x:Name="C1IINPresenter"         Grid.Row="1" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1VXPresenter"         Grid.Row="2" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1VOUT1Presenter"         Grid.Row="3" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1IOUT1Presenter"       Grid.Row="4" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1VOUT2Presenter"    Grid.Row="5" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1IOUT2Presenter"     Grid.Row="6" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1VOUT3Presenter"     Grid.Row="7" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1IOUT3Presenter"      Grid.Row="8" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1VOUT4Presenter"      Grid.Row="9" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C11IOUT4Presenter"      Grid.Row="10" Grid.Column="2"/>
+                                <ContentPresenter x:Name="C1TempPresenter"           Grid.Row="11" Grid.Column="2"/>
+
+                            </Grid>
+
+                        </GroupBox>
+
+                        <GroupBox Header="Buck3"
+                                  IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="1" 
+                      Grid.Column="0"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="Buck3Panel"
+                                ItemsSource="{Binding Buck3Controls}"
+                              ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+
+                        <GroupBox Header="Buck4"
+                                  IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="1" 
+                      Grid.Column="1"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="Buck4Panel"
+                              ItemsSource="{Binding Buck4Controls}"
+                              ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+
+                        <GroupBox Header="Faults"
+                                  IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="3"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="FaultsPanel"
+                           ItemsSource="{Binding FaultsControls}"   
+                              ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Configuration 2" x:Name="Config2" Visibility="{Binding IsConfig2}" IsSelected="{Binding IsSelected2}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Header="Buck1"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" 
+                      Grid.Column="0"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                                    ItemsSource="{Binding Buck1Controls}"
+                                    ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Buck 2 + Buck 3"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" 
+                      Grid.Column="1"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl  
+                                          ItemsSource="{Binding Buck2Controls}"
+                                          ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Telemetry"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="2"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="vinC2Label" Grid.Row="0" Content="VIN"/>
+                            <Label x:Name="IINC2Label" Grid.Row="1" Content="IIN"/>
+                            <Label x:Name="VXC2Label" Grid.Row="2" Content="VX"/>
+                            <Label x:Name="vout1C2Label" Grid.Row="3" Content="VOUT1"/>
+                            <Label x:Name="iiout1C2Label" Grid.Row="4" Content="IOUT1"/>
+                            <Label x:Name="vout2C2Label" Grid.Row="5" Content="VOUT 2+3"/>
+                            <Label x:Name="iiout2C2Label" Grid.Row="6" Content="IOUT 2+3"/>
+                            <Label x:Name="vout4C2Label" Grid.Row="7" Content="VOUT4"/>
+                            <Label x:Name="iiout4C2Label" Grid.Row="8" Content="IOUT4"/>
+                            <Label x:Name="tempC2Label" Grid.Row="9" Content="TEMP"/>
+
+                            <ContentPresenter x:Name="C2VinPresenter"         Grid.Row="0" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C2IINPresenter"         Grid.Row="1" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C2VXPresenter"         Grid.Row="2" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C2VOUT1Presenter"         Grid.Row="3" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C2IOUT1Presenter"       Grid.Row="4" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C2VOUT23Presenter"    Grid.Row="5" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C2IOUT23Presenter"     Grid.Row="6" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C2VOUT4Presenter"      Grid.Row="7" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C21IOUT4Presenter"      Grid.Row="8" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C2TempPresenter"           Grid.Row="9" Grid.Column="2"/>
+
+                        </Grid>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Buck 4"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="1" 
+                      Grid.Column="0"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl
+                                ItemsSource="{Binding Buck3Controls}"
+                              ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Faults"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="3"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                           ItemsSource="{Binding FaultsControls}"   
+                              ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Configuration 3" x:Name="Config3"  Visibility="{Binding IsConfig3}" IsSelected="{Binding IsSelected3}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Header="Buck 1 + Buck 2"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" 
+                      Grid.Column="0"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                                    ItemsSource="{Binding Buck1Controls}"
+                                    ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Buck 3 + Buck 4"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" 
+                      Grid.Column="1"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                                          ItemsSource="{Binding Buck2Controls}"
+                                          ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Telemetry"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="2"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="vinC3Label" Grid.Row="0" Content="VIN"/>
+                            <Label x:Name="IINC3Label" Grid.Row="1" Content="IIN"/>
+                            <Label x:Name="VXC3Label" Grid.Row="2" Content="VX"/>
+                            <Label x:Name="vout1C3Label" Grid.Row="3" Content="VOUT 1+2"/>
+                            <Label x:Name="iiout1C3Label" Grid.Row="4" Content="IOUT 1+2"/>
+                            <Label x:Name="vout3C3Label" Grid.Row="5" Content="VOUT 3+4"/>
+                            <Label x:Name="iiout3C3Label" Grid.Row="6" Content="IOUT 3+4"/>
+                            <Label x:Name="tempC3Label" Grid.Row="7" Content="TEMP"/>
+
+                            <ContentPresenter x:Name="C3VinPresenter"         Grid.Row="0" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C3IINPresenter"         Grid.Row="1" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C3VXPresenter"         Grid.Row="2" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C3VOUT12Presenter"         Grid.Row="3" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C3IOUT12Presenter"       Grid.Row="4" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C3VOUT34Presenter"     Grid.Row="5" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C3IOUT34Presenter"      Grid.Row="6" Grid.Column="2"/>
+                            <ContentPresenter x:Name="C3TempPresenter"           Grid.Row="7" Grid.Column="2"/>
+
+                        </Grid>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Faults"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="3"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                           ItemsSource="{Binding FaultsControls}"   
+                              ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Configuration 4" x:Name="Config4" Visibility="{Binding IsConfig4}" IsSelected="{Binding IsSelected4}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Header="Buck 1 + Buck 2 + Buck 3"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" 
+                      Grid.Column="0"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                                    ItemsSource="{Binding Buck1Controls}"
+                                    ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Buck 4"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" 
+                      Grid.Column="1"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                                          ItemsSource="{Binding Buck2Controls}"
+                                          ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Telemetry"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="2"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="vinC4Label" Grid.Row="0" Content="VIN"/>
+                            <Label x:Name="IINC4Label" Grid.Row="1" Content="IIN"/>
+                            <Label x:Name="VXC4Label" Grid.Row="2" Content="VX"/>
+                            <Label x:Name="vout1C4Label" Grid.Row="3" Content="VOUT 1+2+3"/>
+                            <Label x:Name="iiout1C4Label" Grid.Row="4" Content="IOUT 1+2+3"/>
+                            <Label x:Name="vout4C4Label" Grid.Row="5" Content="VOUT 4"/>
+                            <Label x:Name="iiout4C4Label" Grid.Row="6" Content="IOUT 4"/>
+                            <Label x:Name="tempC4Label" Grid.Row="7" Content="TEMP"/>
+
+                            <ContentPresenter x:Name="C4VinPresenter"         Grid.Row="0" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C4IINPresenter"         Grid.Row="1" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C4VXPresenter"         Grid.Row="2" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C4VOUT123Presenter"         Grid.Row="3" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C4IOUT123Presenter"       Grid.Row="4" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C4VOUT4Presenter"      Grid.Row="5" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C4IOUT4Presenter"      Grid.Row="6" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C4TempPresenter"           Grid.Row="7" Grid.Column="1"/>
+
+                        </Grid>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Faults"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="3"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                           ItemsSource="{Binding FaultsControls}"   
+                              ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Configuration 5" x:Name="Config5" Visibility="{Binding IsConfig5}" IsSelected="{Binding IsSelected5}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Header="Buck 1 + Buck 2 + Buck 3 + Buck 4"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.ColumnSpan="2"
+                      Grid.Column="0"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                                    ItemsSource="{Binding Buck1Controls}"
+                                    ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Telemetry"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="2"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.9*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="vinC5Label" Grid.Row="0" Content="VIN"/>
+                            <Label x:Name="IINC5Label" Grid.Row="1" Content="IIN"/>
+                            <Label x:Name="VXC5Label" Grid.Row="2" Content="VX"/>
+                            <Label x:Name="vout1C5Label" Grid.Row="3" Content="VOUT 1+2+3+4"/>
+                            <Label x:Name="iiout1C5Label" Grid.Row="4" Content="IOUT 1+2+3+4"/>
+                            <Label x:Name="tempC5Label" Grid.Row="5" Content="TEMP"/>
+
+                            <ContentPresenter x:Name="C5VinPresenter"         Grid.Row="0" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C5IINPresenter"         Grid.Row="1" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C5VXPresenter"         Grid.Row="2" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C5VOUT1234Presenter"         Grid.Row="3" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C5IOUT1234Presenter"       Grid.Row="4" Grid.Column="1"/>
+                            <ContentPresenter x:Name="C5TempPresenter"           Grid.Row="5" Grid.Column="1"/>
+
+                        </Grid>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Faults"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="3"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                           ItemsSource="{Binding FaultsControls}"   
+                              ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+        
+        <TabControl x:Name="PE24104TabControl" Grid.Row="1" Grid.RowSpan="2">
+
+            <TabItem Header="Configuration 1" x:Name="PE24104Config1" Visibility="{Binding IsConfig1}" IsSelected="{Binding IsSelected1}" >
+                <ScrollViewer Margin="0,10,0,0">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!--<MediaElement x:Name="media" Grid.Column="0" Grid.Row="0" 
+                                      Grid.ColumnSpan="4"
+                                      Visibility="{Binding IsLoadingEnded}" 
+                                      VerticalAlignment="Center" HorizontalAlignment="Center" MediaEnded="media_MediaEnded"
+                                      Width="150" Height="150" UnloadedBehavior="Manual">
+                        </MediaElement>-->
+
+                        <GroupBox Header="Buck1" 
+                                  IsEnabled="{Binding IsAllRegistersRead}"  
+                                  Grid.Row="0" 
+                                  Grid.Column="0"
+                                  Grid.RowSpan="2"
+                                  Margin="5,0,5,0"
+                                  FontWeight="Normal"
+                                  Foreground="#000">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="PE24104Buck1Panel"
+                                    ItemsSource="{Binding Buck1Controls}"
+                                    ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+
+                        <GroupBox Header="Buck2" 
+                                    IsEnabled="{Binding IsAllRegistersRead}"  
+                                    Grid.Row="0" 
+                                    Grid.Column="1"
+                                    Grid.RowSpan="2"                                  
+                                    Margin="5,0,5,0"
+                                    FontWeight="Normal"
+                                    Foreground="#000">
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="PE24104Buck2Panel" 
+                                          ItemsSource="{Binding Buck2Controls}"
+                                          ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+
+                        <GroupBox Header="Telemetry"
+                                    IsEnabled="{Binding IsAllRegistersRead}"  
+                                    Grid.Row="0" Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    Margin="5,0,5,0"
+                                    FontWeight="Normal"
+                                    Foreground="#000">
+
+                            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.7*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <Label x:Name="PE24104vinLabel" Grid.Row="0" Content="VIN"/>
+                                <Label x:Name="PE24104IINLabel" Grid.Row="1" Content="IIN"/>
+                                <Label x:Name="PE24104VXLabel" Grid.Row="2" Content="VX"/>
+                                <Label x:Name="PE24104vout1Label" Grid.Row="3" Content="VOUT1"/>
+                                <Label x:Name="PE24104iiout1Label" Grid.Row="4" Content="IOUT1"/>
+                                <Label x:Name="PE24104vout2Label" Grid.Row="5" Content="VOUT2"/>
+                                <Label x:Name="PE24104iiout2Label" Grid.Row="6" Content="IOUT2"/>
+                                <Label x:Name="PE24104tempLabel" Grid.Row="7" Content="TEMP"/>
+
+                                <ContentPresenter x:Name="PE24104C1VinPresenter"         Grid.Row="0" Grid.Column="1"/>
+                                <ContentPresenter x:Name="PE24104C1IINPresenter"         Grid.Row="1" Grid.Column="2"/>
+                                <ContentPresenter x:Name="PE24104C1VXPresenter"         Grid.Row="2" Grid.Column="2"/>
+                                <ContentPresenter x:Name="PE24104C1VOUT1Presenter"         Grid.Row="3" Grid.Column="2"/>
+                                <ContentPresenter x:Name="PE24104C1IOUT1Presenter"       Grid.Row="4" Grid.Column="2"/>
+                                <ContentPresenter x:Name="PE24104C1VOUT2Presenter"    Grid.Row="5" Grid.Column="2"/>
+                                <ContentPresenter x:Name="PE24104C1IOUT2Presenter"     Grid.Row="6" Grid.Column="2"/>
+                                <ContentPresenter x:Name="PE24104C1TempPresenter"           Grid.Row="7" Grid.Column="2"/>
+
+                            </Grid>
+
+                        </GroupBox>
+
+                    <GroupBox Header="Faults"
+                                  IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="3"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="PE24104FaultsPanel"
+                           ItemsSource="{Binding FaultsControls}"   
+                              ScrollViewer.CanContentScroll="True"/>
+                            </ScrollViewer>
+
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Configuration 2" x:Name="PE24104Config2"  Visibility="{Binding IsConfig2}" IsSelected="{Binding IsSelected2}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Header="Buck 1 + Buck 2"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" 
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2"
+                      Grid.RowSpan="2"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                                    ItemsSource="{Binding Buck1Controls}"
+                                    ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Telemetry"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="2"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+                        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="PE24104vinC3Label" Grid.Row="0" Content="VIN"/>
+                            <Label x:Name="PE24104IINC3Label" Grid.Row="1" Content="IIN"/>
+                            <Label x:Name="PE24104VXC3Label" Grid.Row="2" Content="VX"/>
+                            <Label x:Name="PE24104vout1C3Label" Grid.Row="3" Content="VOUT 1+2"/>
+                            <Label x:Name="PE24104iiout1C3Label" Grid.Row="4" Content="IOUT 1+2"/>
+                            <Label x:Name="PE24104tempC3Label" Grid.Row="5" Content="TEMP"/>
+
+                            <ContentPresenter x:Name="PE24104C2VinPresenter"         Grid.Row="0" Grid.Column="1"/>
+                            <ContentPresenter x:Name="PE24104C2IINPresenter"         Grid.Row="1" Grid.Column="2"/>
+                            <ContentPresenter x:Name="PE24104C2VXPresenter"         Grid.Row="2" Grid.Column="2"/>
+                            <ContentPresenter x:Name="PE24104C2VOUT12Presenter"         Grid.Row="3" Grid.Column="2"/>
+                            <ContentPresenter x:Name="PE24104C2IOUT12Presenter"       Grid.Row="4" Grid.Column="2"/>
+                            <ContentPresenter x:Name="PE24104C2TempPresenter"           Grid.Row="5" Grid.Column="2"/>
+
+                        </Grid>
+
+                    </GroupBox>
+
+                    <GroupBox Header="Faults"
+                              IsEnabled="{Binding IsAllRegistersRead}"  
+                      Grid.Row="0" Grid.RowSpan="2"
+                      Grid.Column="3"
+                      Margin="5,0,5,0"
+                      FontWeight="Normal"
+                      Foreground="#000">
+
+
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl 
+                           ItemsSource="{Binding FaultsControls}"   
+                              ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            
+        </TabControl>
+    </Grid>
+</UserControl>

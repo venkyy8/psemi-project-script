@@ -1,0 +1,58 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:conv="clr-namespace:MpqChartControl.Converters"
+                    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
+
+    <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+    <Style x:Key="legend" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Gainsboro" />
+        <Setter Property="DockPanel.Dock" Value="Right" />
+        <Setter Property="Width" Value="80" />
+        <Setter Property="Margin" Value="0,5,5,31" />
+        <Setter Property="Background" Value="#fbfbfb" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Visibility" Value="{Binding ShowLegend, Converter={StaticResource BoolToVisibilityConverter}}" />
+    </Style>
+
+    <Style x:Key="legendLabel" TargetType="{x:Type Label}">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Margin" Value="0,0,1,0" />
+    </Style>
+
+    <Style x:Key="legendValue" TargetType="{x:Type Label}">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="DarkGreen" />
+    </Style>
+    
+    <Style x:Key="chart" TargetType="{x:Type lvc:CartesianChart}">
+        <Setter Property="DockPanel.Dock" Value="Bottom" />
+        <Setter Property="AnimationsSpeed" Value="0:0:0.5" />
+        <Setter Property="DisableAnimations" Value="True" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="BorderBrush" Value="Gainsboro" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Hoverable" Value="False" />
+        <Setter Property="DataTooltip" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="lineSeries" TargetType="{x:Type lvc:LineSeries}">
+        <Setter Property="Fill" Value="Transparent" />
+        <Setter Property="Stroke" Value="#0000FF" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="LineSmoothness" Value="1" />
+        <Setter Property="PointGeometry" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="axesSection" TargetType="{x:Type lvc:AxisSection}">
+        <Setter Property="Visibility" Value="{Binding ShowLegend, Converter={StaticResource BoolToVisibilityConverter}}" />
+    </Style>
+
+    <Style x:Key="axesSectionInternal" TargetType="{x:Type lvc:AxisSection}">
+        <Setter Property="Visibility" Value="{Binding ShowLegendInternal, Converter={StaticResource BoolToVisibilityConverter}}" />
+    </Style>
+</ResourceDictionary>
