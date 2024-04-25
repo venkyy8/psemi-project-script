@@ -1,0 +1,9 @@
+Mvvm Light
+Copyright (c) 2009 - 2014 Laurent Bugnion
+
+AvalonDock
+Copyright (c) 2007-2013, Xceed Software Inc.
+All rights reserved.
+
+DotNetZip
+Copyright (c) 1995-2004 Jean-loup Gailly and Mark Adler

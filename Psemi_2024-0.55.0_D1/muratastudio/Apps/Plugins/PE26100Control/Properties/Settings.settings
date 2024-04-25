@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PE26100Control.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="InputResEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="InputResValue_mOhms" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">4.00</Value>
+    </Setting>
+    <Setting Name="OutputResEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="OutputResValue_mOhms" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">4.00</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,339 @@
+,,,,,,,Bit 7,,DBE
+,,,,,,,Bit 6,,SBE
+,,,,,,,Bit 5,,PGATE_ON
+,,,,,,,Bit 4,,TSD
+,,,,,,,Bit 3,,ILIM
+,,,,,,,Bit 2,,ZCD
+,,,,,,,Bit 1,,PX_LO_LATCH
+,,,,,,,Bit 0,,PX_LO_RAW
+EVENT0,,0x00,,,,0x00,,,
+,,,,,,,Bit 5,,VOUT_FAULT
+,,,,,,,Bit 4,,VCD_OK
+,,,,,,,Bit 3,,VCC_OK
+,,,,,,,Bit 2,,VCB_OK
+,,,,,,,Bit 1,,VOUT_OK
+,,,,,,,Bit 0,,VPWR_OK
+EVENT1,,0x01,,,,0x00,,,
+,,,,,,,Bit 7,,DBE
+,,,,,,,Bit 6,,SBE
+,,,,,,,Bit 5,,PGATE_ON
+,,,,,,,Bit 4,,TSD
+,,,,,,,Bit 3,,ILIM
+,,,,,,,Bit 2,,ZCD
+,,,,,,,Bit 1,,PX_LO_LATCH
+,,,,,,,Bit 0,,PX_LO_RAW
+STATUS0,,0x04,,,,0x00,,,
+,,,,,,,Bit 5,,VOUT_FAULT
+,,,,,,,Bit 4,,VCD_OK
+,,,,,,,Bit 3,,VCC_OK
+,,,,,,,Bit 2,,VCB_OK
+,,,,,,,Bit 1,,VOUT_OK
+,,,,,,,Bit 0,,VPWR_OK
+STATUS1,,0x05,,,,0x00,,,
+,,,,,,,Bits 7:6,,MAIN_STATE
+,,,,,,,Bit 5,,
+,,,,,,,Bits 4:0,,PWR_STATE
+STATE,,0x08,,,,0x00,,,
+,,,,,,,Bits 7:0,,CPCLK_LO
+CPCLK_LO,,0x09,,,,0x00,,,
+,,,,,,,Bits 3:0,,CPCLK_HI
+CPCLK_HI,,0x0A,,,,0x00,,,
+,,,,,,,Bit 4,,BOOST
+,,,,,,,Bits 3:2,,
+,,,,,,,Bits 1:0,,RATIO
+MODE,,0x0B,,,,0x00,,,
+,,,,,,,Bits 5:0,,TR_OSC
+TR_OSC,,0x10,,,,0x20,,,
+,,,,,,,Bits 5:0,,TR_IREF
+TR_IREF,,0x12,,,,0x00,,,
+,,,,,,,Bits 5:0,,TR_BG_BUF
+TR_BG_BUF,,0x13,,,,0x00,,,
+,,,,,,,Bits 7:0,,TR_VBG
+TR_VBG,,0x14,,,,0x00,,,
+,,,,,,,Bits 3:0,,TR_TSD
+TR_TSD,,0x15,,,,0x00,,,
+,,,,,,,Bits 5:0,,TR_CS
+TR_CS,,0x16,,,,0x00,,,
+,,,,,,,Bits 5:0,,TR_ZC
+TR_ZC,,0x17,,,,0x00,,,
+,,,,,,,Bits 3:0,,TR_CP
+TR_CP,,0x18,,,,0x00,,,
+,,,,,,,Bits 7:0,,TR_SPARE
+TR_SPARE,,0x19,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_CP0
+CFG_CP0,,0x20,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_CP1
+CFG_CP1,,0x21,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_CP2
+CFG_CP2,,0x22,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_CP3
+CFG_CP3,,0x23,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_CP4
+CFG_CP4,,0x24,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_CP5
+CFG_CP5,,0x25,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_CP6
+CFG_CP6,,0x26,,,,0x00,,,
+,,,,,,,Bit 2,,LO_VDD
+,,,,,,,Bit 1,,DIS_TSD
+,,,,,,,Bit 0,,SEL_LO
+CFG_REFBIAS,,0x27,,,,0x00,,,
+,,,,,,,Bits 5:4,,SDA_OUT
+,,,,,,,Bits 3:2,,SDA_IN
+,,,,,,,Bits 1:0,,SCL_IN
+CFG_IO,,0x28,,,,0x00,,,
+,,,,,,,Bits 4:0,,PGATE
+CFG_PGATE,,0x29,,,,0x00,,,
+,,,,,,,Bits 7:0,,CFG_SPARE
+CFG_SPARE,,0x2A,,,,0x00,,,
+,,,,,,,Bits 3:2,,ALT_GEAR
+,,,,,,,Bit 1,,SS
+,,,,,,,Bit 0,,USE_DEF
+CFG_CPCLK0,,0x40,,,,0x00,,,
+,,,,,,,Bits 7:0,,CPCLK_DEF_LO
+CFG_CPCLK1,,0x41,,,,0x78,,,
+,,,,,,,Bits 3:0,,CPCLK_DEF_HI
+CFG_CPCLK2,,0x42,,,,0x00,,,
+,,,,,,,Bits 6:0,,CPCLK_OFFSET
+CFG_CPCLK3,,0x43,,,,0x7E,,,
+,,,,,,,Bits 7:0,,CPCLK_GAIN
+CFG_CPCLK4,,0x44,,,,0x10,,,
+,,,,,,,Bits 7:0,,CPCLK_MIN_LO
+CFG_CPCLK5,,0x45,,,,0x00,,,
+,,,,,,,Bits 7:0,,CPCLK_MIN_HI
+CFG_CPCLK6,,0x46,,,,0x00,,,
+,,,,,,,Bits 7:0,,CPCLK_MAX_LO
+CFG_CPCLK7,,0x47,,,,0xFF,,,
+,,,,,,,Bits 3:0,,CPCLK_MAX_HI
+CFG_CPCLK8,,0x48,,,,0x0F,,,
+,,,,,,,Bits 7:4,,BUCK_DIV
+,,,,,,,Bits 3:0,,BOOST_DIV
+CFG_CLKSS,,0x49,,,,0xBB,,,
+,,,,,,,Bit 5,,PGATE_ON
+,,,,,,,Bit 4,,TSD
+,,,,,,,Bit 3,,ILIM
+,,,,,,,Bit 2,,ZCD
+,,,,,,,Bit 1,,PX_LO_LATCH
+,,,,,,,Bit 0,,PX_LO_RAW
+CFG_BLANK0,,0x4A,,,,0x00,,,
+,,,,,,,Bit 4,,VCD_OK
+,,,,,,,Bit 3,,VCC_OK
+,,,,,,,Bit 2,,VCB_OK
+,,,,,,,Bit 1,,VOUT_OK
+,,,,,,,Bit 0,,VPWR_OK
+CFG_BLANK1,,0x4B,,,,0x00,,,
+,,,,,,,Bit 4,,TSD
+,,,,,,,Bit 3,,ILIM
+,,,,,,,Bit 2,,ZCD
+,,,,,,,Bits 1:0,,
+CFG_LATCH0,,0x4C,,,,0x00,,,
+,,,,,,,Bit 5,,VOUT_FAULT
+,,,,,,,Bits 4:0,,
+CFG_LATCH1,,0x4D,,,,0x00,,,
+,,,,,,,Bits 7:6,,ZCD_DEGLITCH
+,,,,,,,Bits 5:4,,ILIM_DEGLITCH
+,,,,,,,Bits 3:2,,CPCLKM_DEGLITCH
+,,,,,,,Bits 1:0,,TSD_DEGLITCH
+CFG_DEGLITCH0,,0x4E,,,,0xA2,,,
+,,,,,,,Bits 7:6,,PX_LO_RAW
+,,,,,,,Bits 5:4,,PX_LO_LATCH
+,,,,,,,Bits 3:2,,VOUT_OK
+,,,,,,,Bits 1:0,,VPWR_OK
+CFG_DEGLITCH1,,0x4F,,,,0xAA,,,
+,,,,,,,Bits 7:6,,PGATE_ON
+,,,,,,,Bits 5:4,,VCD_OK
+,,,,,,,Bits 3:2,,VCC_OK
+,,,,,,,Bits 1:0,,VCB_OK
+CFG_DEGLITCH2,,0x50,,,,0xAA,,,
+,,,,,,,Bit 0,,EN_DET
+CFG_DEGLITCH3,,0x51,,,,0x02,,,
+,,,,,,,Bits 6:4,,DISCHG_PHASE
+,,,,,,,Bit 3,,
+,,,,,,,Bits 2:0,,HICCUP
+CFG_PTIME0,,0x52,,,,0x00,,,
+,,,,,,,Bits 6:4,,BST_CHARGE
+,,,,,,,Bit 3,,
+,,,,,,,Bits 2:0,,DISCHG_FLYCAP
+CFG_PTIME1,,0x53,,,,0x00,,,
+,,,,,,,Bits 6:4,,STEPDOWN_SOFTSTART
+,,,,,,,Bit 3,,
+,,,,,,,Bits 2:0,,STEPUP_SOFTSTART
+CFG_PTIME2,,0x54,,,,0x00,,,
+,,,,,,,Bits 6:4,,SHUTDOWN
+,,,,,,,Bit 3,,
+,,,,,,,Bits 2:0,,CP_START
+CFG_PTIME3,,0x55,,,,0x00,,,
+,,,,,,,Bits 2:0,,OFF
+CFG_PTIME4,,0x56,,,,0x00,,,
+,,,,,,,Bits 6:0,,CFG_I2C_ADDR
+CFG_I2C,,0x57,,,,0x30,,,
+,,,,,,,Bits 1:0,,DISABLE_STARTUP
+CFG_START,,0x58,,,,0x01,,,
+,,,,,,,Bits 3:0,,PAGE_VALID
+PAGE,,0x59,,,,0x00,,,
+,,,,,,,Bit 1,,NO_CLK_GATE
+,,,,,,,Bit 0,,PX_LO_SEL
+CFG_ETC,,0x5A,,,,0x02,,,
+,,,,,,,Bits 7:0,,UNUSED0
+OTP_UNUSED0,,0x60,,,,0x00,,,
+,,,,,,,Bits 5:3,,ADDR
+,,,,,,,Bits 2:0,,
+IMAGE_ADDR,,0x7F,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA0
+IMAGE_DATA0,,0x80,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA1
+IMAGE_DATA1,,0x81,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA2
+IMAGE_DATA2,,0x82,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA3
+IMAGE_DATA3,,0x83,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA4
+IMAGE_DATA4,,0x84,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA6
+IMAGE_DATA5,,0x85,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA7
+IMAGE_DATA6,,0x86,,,,0x00,,,
+,,,,,,,Bit 7,,NO_RESET
+,,,,,,,Bit 6,,
+,,,,,,,Bits 5:4,,TM_I2C
+,,,,,,,Bits 3:1,,
+,,,,,,,Bit 0,,NO_INCR
+IMAGE_DATA7,,0x87,,,,0x00,,,
+,,,,,,,Bit 7,,SCANMODE
+,,,,,,,Bits 6:0,,
+TM_I2C,,0xC0,,,,0x00,,,
+,,,,,,,Bit 0,,CLEAR_LF
+TM_DFT,,0xC1,,,,0x00,,,
+,,,,,,,Bits 6:0,,SELECT0
+TM_LATCH_FAULT,,0xC2,,,,0x00,,,
+,,,,,,,Bits 6:0,,SELECT1
+TM_DIAG0,,0xC3,,,,0x00,,,
+,,,,,,,Bits 5:3,,PMUX_D
+,,,,,,,Bit 2,,
+,,,,,,,Bits 1:0,,PMUX_A
+TM_DIAG1,,0xC4,,,,0x00,,,
+,,,,,,,Bits 7:0,,ADDR_A
+TM_PMUX,,0xC5,,,,0x00,,,
+,,,,,,,Bits 7:0,,ADDR_D
+TM_ADDR_A,,0xC6,,,,0x00,,,
+,,,,,,,Bit 7,,BSTA
+,,,,,,,Bit 6,,BSTP
+,,,,,,,Bit 5,,SWD
+,,,,,,,Bit 4,,SWC
+,,,,,,,Bit 3,,SWB
+,,,,,,,Bit 2,,SWA
+,,,,,,,Bit 1,,PHS
+,,,,,,,Bit 0,,PLS
+TM_ADDR_D,,0xC7,,,,0x00,,,
+,,,,,,,Bit 7,,LMD
+,,,,,,,Bit 6,,LMC
+,,,,,,,Bit 5,,LMB
+,,,,,,,Bit 4,,SS
+,,,,,,,Bit 3,,SSPH
+,,,,,,,Bit 2,,BSTD
+,,,,,,,Bit 1,,BSTC
+,,,,,,,Bit 0,,BSTB
+TM_CP0,,0xC8,,,,0x00,,,
+,,,,,,,Bits 7:3,,CS
+,,,,,,,Bit 2,,UVTH
+,,,,,,,Bit 1,,ENPD
+,,,,,,,Bit 0,,CSALL
+TM_CP1,,0xC9,,,,0x00,,,
+,,,,,,,Bit 1,,PORB
+,,,,,,,Bit 0,,REFBIAS
+TM_CP2,,0xCA,,,,0x00,,,
+,,,,,,,Bits 7:6,,OV_DISCHARGE
+,,,,,,,Bits 5:4,,OV_RATIO1
+,,,,,,,Bits 3:2,,OV_RATIO0
+,,,,,,,Bits 1:0,,OV_BOOST_MODE
+TM_REF,,0xCB,,,,0x00,,,
+,,,,,,,Bits 7:6,,OV_EN_CP
+,,,,,,,Bits 5:4,,OV_STATE2
+,,,,,,,Bits 3:2,,OV_STATE1
+,,,,,,,Bits 1:0,,OV_STATE0
+TM_OVER0,,0xCC,,,,0x00,,,
+,,,,,,,Bits 7:6,,OV_PGOOD_PD_N
+,,,,,,,Bits 5:4,,OV_PGOOD_VALID
+,,,,,,,Bits 3:2,,OV_PGATE_EN
+,,,,,,,Bits 1:0,,OV_EN_DIGITAL
+TM_OVER1,,0xCD,,,,0x00,,,
+,,,,,,,Bits 7:6,,OV_SOFTSW
+,,,,,,,Bits 5:4,,OV_DIG_READ
+,,,,,,,Bits 3:2,,OV_CPCLKM_START
+,,,,,,,Bits 1:0,,OV_CPCLKM_EN
+TM_OVER2,,0xCE,,,,0x00,,,
+,,,,,,,Bit 1,,MAIN
+,,,,,,,Bit 0,,PWR
+TM_OVER3,,0xCF,,,,0x00,,,
+,,,,,,,Bits 7:6,,MAIN
+,,,,,,,Bit 5,,
+,,,,,,,Bits 4:0,,PWR
+TM_STATE0,,0xD0,,,,0x00,,,
+,,,,,,,Bit 0,,REFRESH
+TM_STATE1,,0xD1,,,,0x00,,,
+,,,,,,,Bit 7,,COMP
+,,,,,,,Bits 6:4,,
+,,,,,,,Bit 3,,OVERFLOW
+,,,,,,,Bit 2,,LONG
+,,,,,,,Bit 1,,SHORT
+,,,,,,,Bit 0,,DONE
+CPCLKM_CMD,,0xD2,,,,0x00,,,
+,,,,,,,Bit 5,,ECC_EN
+,,,,,,,Bits 4:3,,
+,,,,,,,Bits 2:0,,SIZE
+CPCLKM_STATUS,,0xD3,,,,0x00,,,
+,,,,,,,Bits 6:0,,ADDR
+NVM_CTRL,,0xE0,,,,0x13,,,
+,,,,,,,Bit 7,,LOOP
+,,,,,,,Bit 6,,
+,,,,,,,Bits 5:4,,START_PAGE
+,,,,,,,Bit 3,,
+,,,,,,,Bit 2,,RELOAD_CMD
+,,,,,,,Bit 1,,READ_CMD
+,,,,,,,Bit 0,,WRITE_CMD
+NVM_ADDR,,0xE1,,,,0x00,,,
+,,,,,,,Bit 7,,DBE
+,,,,,,,Bit 6,,SBE
+,,,,,,,Bits 5:4,,LOAD_PAGE
+,,,,,,,Bit 3,,LOAD_ERR
+,,,,,,,Bit 2,,RELOAD_DONE
+,,,,,,,Bit 1,,READ_DONE
+,,,,,,,Bit 0,,WRITE_DONE
+NVM_CMD,,0xE2,,,,0x00,,,
+,,,,,,,Bit 7,,TM_PWE
+,,,,,,,Bit 6,,TM_PRD
+,,,,,,,Bits 5:4,,
+,,,,,,,Bits 3:1,,PTM
+,,,,,,,Bit 0,,PPROG
+NVM_STATUS,,0xE3,,,,0x00,,,
+,,,,,,,Bit 0,,VPP_ON
+OTP_CTRL0,,0xE4,,,,0x00,,,
+,,,,,,,Bits 7:0,,WTIM_LO
+OTP_CTRL1,,0xE5,,,,0x00,,,
+,,,,,,,Bits 7:0,,WTIM_HI
+OTP_WTIM0,,0xE6,,,,0x3C,,,
+,,,,,,,Bits 7:0,,DATA0
+OTP_WTIM1,,0xE7,,,,0x0F,,,
+,,,,,,,Bits 7:0,,DATA1
+NVM_DATA0,,0xE8,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA2
+NVM_DATA1,,0xE9,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA3
+NVM_DATA2,,0xEA,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA4
+NVM_DATA3,,0xEB,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA5
+NVM_DATA4,,0xEC,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA6
+NVM_DATA5,,0xED,,,,0x00,,,
+,,,,,,,Bits 7:0,,DATA7
+NVM_DATA6,,0xEE,,,,0x00,,,
+,,,,,,,Bits 7:4,,ECO
+,,,,,,,Bits 3:0,,BASE
+NVM_DATA7,,0xEF,,,,0x00,,,
+,,,,,,,,,
+DIE_REV,,0xFD,,,,0x00,,,
+,,,,,,,,,
+CHIP_ID,,0xFE,,,,0x16,,,
+,,,,,,,,,
+PSEMI_ID,,0xFF,,,,0x95,,,

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application>
+  <Plugins>
+     <Plugin>PE24103Control</Plugin>
+	 <Plugin>PE24103i2cControl</Plugin>
+     <Plugin>RegisterControl</Plugin>
+  </Plugins>
+</Application>

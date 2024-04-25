@@ -1,0 +1,55 @@
+<CommScript>
+	<!--
+		Available actions:
+			<Script />						- Container for individual script
+			<Comm />						- Generic action used to read or write bytes on the protocol bus
+			  ● <I2c />						- Alternative to 'Comm' used for protocol clarity
+			  ● <PMBus />					- Alternative to 'Comm' used for protocol clarity
+			<Loop />						- N-Level nesting
+			<Delay />						- Specify time in milliseconds
+
+		Required attributes:
+			<Script/>	Name(STR)			- Name of script.
+			<Comm />	Type(STR)			- Specifies whether to read "R" or write "W" to the device.
+			<Comm />	Command(HEX)		- The devices Command Code, interchangeable with Register Address.
+			<Comm />	RegisterAddress(HEX)- The devices Register Address, interchangeable with Command Code.
+			<Comm />	Length(INT)			- Specifies the byte count. Required when type = "R"
+
+		Optional attributes:
+			<Comm />	SlaveAddress(HEX)	- Sets the Comm slave address. If omitted, the active targets address is used.
+			<Comm />	RepeatCount(INT)	- Repeats the Comm action. If omitted, RepeatCount = 1
+			<Comm />	InnerDelayMs(INT)	- Delays the transaction between bytes. If omitted, InnerDelayMs = 0
+			<Comm />	Length(INT)			- Specifies the byte count. Optional when type = "W". If omitted, Length is calculated
+			<Loop />	RepeatCount(INT)	- Repeats the loop action. If omitted, RepeatCount = 1
+			<Delay />	WaitMs(INT)			- Delays the script execution. If omitted, WaitMs = 0
+	-->
+	<Script Name="WriteExample1">
+		<Comm Type="W" RegisterAddress="01" RepeatCount="3" InnerDelayMs="100">80</Comm>
+		<Comm Type="W" RegisterAddress="21">58 02</Comm>
+	</Script>
+
+	<Script Name="ReadExample2">
+		<Loop RepeatCount="2">
+			<Loop RepeatCount="3">
+				<Comm Type="R" RegisterAddress="01" Length="1" RepeatCount="10" InnerDelayMs="25" />
+				<Comm Type="R" RegisterAddress="21" Length="2" />
+			</Loop>
+			<Delay WaitMs="1000" />
+			<Loop RepeatCount="3">
+				<Comm Type="R" RegisterAddress="24" Length="2" RepeatCount="10" InnerDelayMs="25" />
+				<Comm Type="R" RegisterAddress="25" Length="2" />
+			</Loop>
+			<Delay WaitMs="1000" />
+		</Loop>
+	</Script>
+
+	<Script Name="WriteReadExample3" SlaveAddress="3F">
+		<PMBus Type="W" Command="21" InnerDelayMs="250">F4 01</PMBus>
+		<PMBus Type="R" Command="21" Length="2" RepeatCount="3" />
+	</Script>
+	
+	<Script Name="WriteExample4" SlaveAddress="30">
+		<I2c Type="W" RegisterAddress="01" RepeatCount="10" InnerDelayMs="100">01 02 03 AB CD EF</I2c>		
+		<I2c Type="W" RegisterAddress="02">FE DC BA 30 20 10</I2c>
+	</Script>
+</CommScript>

@@ -1,0 +1,1047 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Device>
+  <FileInformation>
+    <Version>3</Version>
+    <Date>10/31/2020</Date>
+  </FileInformation>
+  <DeviceId>
+    <Name>PE23108</Name>
+    <Version>1.00</Version>
+	<BaseName>ARCxC0608</BaseName>
+  </DeviceId>
+  <UI>
+	<Panels>
+		<Panel Name="Command" Orientation="Vertical">
+			<!-- LEDEN -->
+			<Toggle Label="LED String 1" Map="LEDEN|LEDEN1" Description="LED string 1 ON-OFF" />
+			<Toggle Label="LED String 2" Map="LEDEN|LEDEN2" Description="LED string 2 ON-OFF" />
+			<Toggle Label="LED String 3" Map="LEDEN|LEDEN3" Description="LED string 3 ON-OFF" />
+			<Toggle Label="LED String 4" Map="LEDEN|LEDEN4" Description="LED string 4 ON-OFF" />
+			<Toggle Label="LED String 5" Map="LEDEN|LEDEN5" Description="LED string 5 ON-OFF" />
+			<Toggle Label="LED String 6" Map="LEDEN|LEDEN6" Description="LED string 6 ON-OFF" />
+			<Toggle Label="LED String 7" Map="LEDEN|LEDEN7" Description="LED string 7 ON-OFF" />
+			<Toggle Label="LED String 8" Map="LEDEN|LEDEN8" Description="LED string 8 ON-OFF" />			
+		</Panel>
+		<Panel Name="Status" Orientation="Horizontal">
+			<BitStatus Label="Secondary Current Limit" Map="STATUS1|BST_ILIM_SEC" Description="Status bit to flag a secondary current limit condition." />			
+			<BitStatus Label="Output Under Voltage" Map="STATUS1|VOUT_OVP" Description="Status bit to flag a output over voltage condition." />			
+			<BitStatus Label="VX Over Voltage" Map="STATUS1|VX_OV" Description="Status bit to flag a VX node over voltage condition." />
+			<BitStatus Label="VX Under Voltage" Map="STATUS1|VX_UV" Description="Status bit to flag a VX node under voltage condition." />
+			<BitStatus Label="Disconnect Over Current" Map="STATUS1|DISC_OCP" Description="Status bit to flag a disconnect switch over current condition" />
+			<BitStatus Label="Thermal Shutdown" Map="STATUS1|TSD" Description="Status bit to flag a thermal shutdown condition." />
+			<BitStatus Label="Soft Start Timeout" Map="STATUS1|SS_TIMEOUT" Description="Status bit to flag a soft start timeout condition." />
+			<BitStatus Label="LED Short" Map="STATUS1|LED_SHORT" Description="An LED SHORT condition was detected on one or more strings. Once set this bit will stay set until the STATUS2 register is read." />
+			<BitStatus Label="LED Open" Map="STATUS2|LED_OPEN" Description="An LED OPEN condition was detected on one or more strings. Once set this bit will stay set until the STATUS2 register is read." />
+			<BitStatus Label="MTP Write" Map="STATUS2|MTP_WRITE_DNE" Description="Status bit to flag after user programming." />
+			<BitStatus Label="Checksum" Map="STATUS2|CRCOK" OnBackColor="#FFADFF2F" OnForeColor="#FF000000" Description="Status bit indicating the register CHECKSUM is good." />			
+		</Panel>
+		<Panel Name="Configuration" Orientation="Vertical">		
+			<!-- COMMAND 0x00-->
+			<List Label="Voltage Ramp" Map="COMMAND" Mask="0xE0" Description="Voltage ramp generator ramp amplitude selection as a function of typical VOUT voltage.">
+				<Option Label="17V" Value="0" />
+				<Option Label="21V" Value="1" />
+				<Option Label="25V" Value="2" />
+				<Option Label="29V" Value="3" />	
+				<Option Label="33V" Value="4" />
+				<Option Label="37V" Value="5" />
+				<Option Label="41V" Value="6" />
+				<Option Label="45V" Value="7" />
+			</List>
+			<!-- COMMAND 0x00 -->			
+			<List Label="Boost Operating Mode" Map="COMMAND" Mask="0x10" Description="Boost switching mode.">
+				<Option Label="DCM fixed frequency" Value="0" />
+				<Option Label="CCM fixed frequency" Value="1" />
+			</List>
+			<!-- COMMAND 0x00 -->	
+			<List Label="Over-voltage Threshold" Map="COMMAND" Mask="0x0F" Description="Output over-voltage protection threshold.">
+				<Option Label="-" Value="0" />
+				<Option Label="-" Value="1" />
+				<Option Label="43.750V" Value="2" />
+				<Option Label="41.875V" Value="3" />	
+				<Option Label="40.000V" Value="4" />
+				<Option Label="38.125V" Value="5" />
+				<Option Label="36.250V" Value="6" />
+				<Option Label="34.375V" Value="7" />
+				<Option Label="32.500V" Value="8" />
+				<Option Label="30.625V" Value="9" />
+				<Option Label="28.750V" Value="10" />
+				<Option Label="26.875V" Value="11" />
+				<Option Label="25.000V" Value="12" />
+				<Option Label="23.125V" Value="13" />
+				<Option Label="21.250V" Value="14" />
+				<Option Label="19.375V" Value="15" />				
+			</List>			
+			<!-- CONFIG_BOOST 0x01 -->
+			<List Label="Boost Cycle Threshold" Map="CONFIG_BOOST" Mask="0x60" Description="Boost cycle-by-cycle ILIM threshold.">
+				<Option Label="2.0A" Value="0" />
+				<Option Label="1.0A" Value="1" />
+				<Option Label="2.5A" Value="2" />
+				<Option Label="3.0A" Value="3" />				
+			</List>					
+			<!-- CONFIG_BOOST 0x01 -->
+			<List Label="Boost Switching Freq" Map="CONFIG_BOOST" Mask="0x0F" Description="Boost switching frequency.">
+				<Option Label="1.43 MHz" Value="0" />
+				<Option Label="1.43 MHz" Value="1" />
+				<Option Label="1.43 kHz" Value="2" />
+				<Option Label="953 kHz" Value="3" />	
+				<Option Label="715 kHz" Value="4" />
+				<Option Label="572 kHz" Value="5" />
+				<Option Label="477 kHz" Value="6" />
+				<Option Label="409 kHz" Value="7" />
+				<Option Label="358 kHz" Value="8" />
+				<Option Label="318 kHz" Value="9" />
+				<Option Label="286 kHz" Value="10" />
+				<Option Label="260 kHz" Value="11" />
+				<Option Label="238 kHz" Value="12" />
+				<Option Label="220 kHz" Value="13" />
+				<Option Label="204 kHz" Value="14" />
+				<Option Label="191 kHz" Value="15" />
+			</List>			
+			<!-- ILED_CONFIG1 0x02 -->
+			<List Label="Fade Speed" Map="ILED_CONFIG1" Mask="0xF0" Description="Set the fading counter from 50us to 12.75ms in 50us steps. This is the period between each intensity step.">
+				<Option Label="No Fading" Value="0" />
+				<Option Label="44.7 us" Value="1" />
+				<Option Label="1.432 ms" Value="2" />
+				<Option Label="2.148 ms" Value="3" />	
+				<Option Label="2.860 ms" Value="4" />
+				<Option Label="3.548 ms" Value="5" />
+				<Option Label="4.290 ms" Value="6" />
+				<Option Label="5.012 ms" Value="7" />
+				<Option Label="5.700 ms" Value="8" />
+				<Option Label="6.440 ms" Value="9" />
+				<Option Label="7.160 ms" Value="10" />
+				<Option Label="7.800 ms" Value="11" />
+				<Option Label="8.590 ms" Value="12" />
+				<Option Label="9.300 ms" Value="13" />
+				<Option Label="10.024 ms" Value="14" />
+				<Option Label="10.700 ms" Value="15" />
+			</List>	
+			<!-- ILED_CONFIG2 0x03 -->
+			<List Label="Log Mode" Map="ILED_CONFIG2" Mask="0x40" Description="Dimming mode selector.">
+				<Option Label="Linear" Value="0" />
+				<Option Label="Logarithmic" Value="1" />
+			</List>			
+			<!-- ILED_CONFIG2 0x03 -->
+			<List Label="Dimming Output Mode" Map="ILED_CONFIG2" Mask="0x20" Description="Dimming output mode selection.">
+				<Option Label="Analog dimming only" Value="0" />
+				<Option Label="Mixed-mode dimming" Value="1" />
+			</List>		
+			<!-- ILED_CONFIG2 0x03 -->
+			<List Label="Maximum Current/String" Map="ILED_CONFIG2" Mask="0x1F" Description="Program maximum current per string in 1mA steps.">
+				<Option Label="2mA" Value="0" />
+				<Option Label="3mA" Value="1" />
+				<Option Label="4mA" Value="2" />
+				<Option Label="5mA" Value="3" />	
+				<Option Label="6mA" Value="4" />
+				<Option Label="7mA" Value="5" />
+				<Option Label="8mA" Value="6" />
+				<Option Label="9mA" Value="7" />
+				<Option Label="10mA" Value="8" />
+				<Option Label="11mA" Value="9" />
+				<Option Label="12mA" Value="10" />
+				<Option Label="13mA" Value="11" />
+				<Option Label="14mA" Value="12" />
+				<Option Label="15mA" Value="13" />
+				<Option Label="16mA" Value="14" />
+				<Option Label="17mA" Value="15" />
+				<Option Label="18mA" Value="16" />
+				<Option Label="19mA" Value="17" />
+				<Option Label="20mA" Value="18" />
+				<Option Label="21mA" Value="19" />
+				<Option Label="22mA" Value="20" />
+				<Option Label="23mA" Value="21" />
+				<Option Label="24mA" Value="22" />
+				<Option Label="25mA" Value="23" />
+				<Option Label="26mA" Value="24" />
+				<Option Label="27mA" Value="25" />
+				<Option Label="28mA" Value="26" />
+				<Option Label="29mA" Value="27" />
+				<Option Label="30mA" Value="28" />
+				<Option Label="31mA" Value="29" />
+				<Option Label="32mA" Value="30" />
+				<Option Label="33mA" Value="31" />	
+			</List>					
+			
+			<!-- WLED_FADING_CTRL 0x05 Slider Control handled in code -->
+					
+			<!-- ILED_CONFIG3 0x07 -->
+			<List Label="LED Short Detect" Map="ILED_CONFIG3" Mask="0x60" Description="LED short detect threshold.">
+				<Option Label="4.35V" Value="0" />
+				<Option Label="4.85V" Value="1" />
+				<Option Label="5.25V" Value="2" />
+				<Option Label="5.75V" Value="3" />
+			</List>			
+			<!-- ILED_CONFIG3 0x07 -->
+			<List Label="Hybrid Dimming Transition" Map="ILED_CONFIG3" Mask="0x18" Description="Transition point between PWM dimming and analog dimming.">
+				<Option Label="12.5% of full scale current" Value="0" />
+				<Option Label="25% of full scale current" Value="1" />
+				<Option Label="50% of full scale current" Value="2" />
+				<Option Label="100% of full scale current" Value="3" />
+			</List>
+			<!-- ILED_CONFIG3 0x07 -->			
+			<List Label="PWM Output Dim Freq" Map="ILED_CONFIG3" Mask="0x03" Description="PWM output dimming frequency (KHz).">
+				<Option Label="2.79 kHz" Value="0" />
+				<Option Label="5.59 kHz" Value="1" />
+				<Option Label="11.20 kHz" Value="2" />
+				<Option Label="22.49 kHz" Value="3" />
+			</List>		
+			<!-- FILTER_SETTINGS 0x09 -->
+			<List Label="LED Brightness Control" Map="FILTER_SETTINGS" Mask="0xC0" Description="LED dimming input selection.">
+				<Option Label="PWM control only" Value="0" />
+				<Option Label="I2C control only" Value="1" />
+				<Option Label="Input PWM x I2C control" Value="2" />
+				<Option Label="-" Value="3" />
+			</List>
+			<!-- DITHER 0x09 -->
+			<List Label="Dither Control" Map="FILTER_SETTINGS" Mask="0x20" Description="LED dithering control.">
+				<Option Label="Disabled" Value="0" />
+				<Option Label="Enabled" Value="1" />
+			</List>		
+			<!-- FILTER_SETTINGS 0x09 -->
+			<List Label="RC Filter" Map="FILTER_SETTINGS" Mask="0x18" Description="Digital R-C Filter for non-DPWM mode brightness changes.">
+				<Option Label="Off" Value="0" />
+				<Option Label="417mS" Value="1" />
+				<Option Label="207mS" Value="2" />
+				<Option Label="103mS" Value="3" />
+			</List>
+			<!-- FILTER_SETTINGS 0x09 -->
+			<List Label="PWM Filter" Map="FILTER_SETTINGS" Mask="0x07" Description="Input PWM Filter for non-DPWM mode.">
+				<Option Label="Off" Value="0" />
+				<Option Label="2 Steps" Value="1" />
+				<Option Label="4 Steps" Value="2" />
+				<Option Label="6 Steps" Value="3" />
+				<Option Label="8 Steps" Value="4" />
+				<Option Label="10 Steps" Value="5" />
+				<Option Label="12 Steps" Value="6" />
+				<Option Label="14 Steps" Value="7" />
+			</List>
+			
+			<!-- IMAXTUNE 0x0A -->
+			<List Label="Initial Voltage" Map="IMAXTUNE" Mask="0xF0" Description="Initial starting target voltage.">
+				<Option Label="13.75 V" Value="0" />
+				<Option Label="16.02 V" Value="1" />
+				<Option Label="18.29 V" Value="2" />
+				<Option Label="20.56 V" Value="3" />	
+				<Option Label="22.83 V" Value="4" />
+				<Option Label="25.10 V" Value="5" />
+				<Option Label="27.37 V" Value="6" />
+				<Option Label="29.64 V" Value="7" />
+				<Option Label="31.91 V" Value="8" />
+				<Option Label="34.18 V" Value="9" />
+				<Option Label="36.45 V" Value="10" />
+				<Option Label="38.72 V" Value="11" />
+				<Option Label="-" Value="12" />
+				<Option Label="-" Value="13" />
+				<Option Label="-" Value="14" />
+				<Option Label="-" Value="15" />
+			</List>	
+			<!-- IMAXTUNE 0x0A -->
+			<List Label="LED Current Increase" Map="IMAXTUNE" Mask="0x0F" Description="Sets percentage increase of LED full-scale current.">
+				<Option Label="0.00%" Value="0" />
+				<Option Label="0.52%" Value="1" />
+				<Option Label="0.93%" Value="2" />
+				<Option Label="1.45%" Value="3" />	
+				<Option Label="1.86%" Value="4" />
+				<Option Label="2.38%" Value="5" />
+				<Option Label="2.79%" Value="6" />
+				<Option Label="3.31%" Value="7" />
+				<Option Label="3.84%" Value="8" />
+				<Option Label="4.37%" Value="9" />
+				<Option Label="4.77%" Value="10" />
+				<Option Label="5.30%" Value="11" />
+				<Option Label="5.70%" Value="12" />
+				<Option Label="6.23%" Value="13" />
+				<Option Label="6.63%" Value="14" />
+				<Option Label="7.60%" Value="15" />
+			</List>	
+			
+			<!-- WLED_ISET_LSB & WLED_ISET_MSB -->
+			<Slider Label="LED Intensity" Map="WLED_ISET_LSB|WLED_ISET_MSB" Mask="0xF0|0xFF" Description="Sets the LEDs intensity. Calculates brightness from 0% to 100%." />
+		</Panel>
+	</Panels>
+  </UI>  
+  <Registers>
+  	<!-- Customer Registers -->
+    <Register Name="COMMAND" Address="0x00" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="SEL_VR2" Description="Voltage ramp generator ramp amplitude selection as a function of typical VOUT voltage"/>
+      <Bit Mask="0x0040" Name="SEL_VR1" Description="Voltage ramp generator ramp amplitude selection as a function of typical VOUT voltage"/>
+      <Bit Mask="0x0020" Name="SEL_VR0" Description="Voltage ramp generator ramp amplitude selection as a function of typical VOUT voltage"/>
+      <Bit Mask="0x0010" Name="CCM_Mode" Description="DCM fixed-frequency boost switching (no negative ILX) - 1: Forced CCM fixed-frequency boost switching (negative ILX allowed)"/>
+      <Bit Mask="0x0008" Name="VOUT_OVP_SEL3" Description="4-bit selection of VOUT OVP thresholds from 19.375V (Fh) to 43.75V (0h default)"/>
+      <Bit Mask="0x0004" Name="VOUT_OVP_SEL2" Description="4-bit selection of VOUT OVP thresholds from 19.375V (Fh) to 43.75V (0h default)"/>
+      <Bit Mask="0x0002" Name="VOUT_OVP_SEL1" Description="4-bit selection of VOUT OVP thresholds from 19.375V (Fh) to 43.75V (0h default)"/>
+      <Bit Mask="0x0001" Name="VOUT_OVP_SEL0" Description="4-bit selection of VOUT OVP thresholds from 19.375V (Fh) to 43.75V (0h default)"/>
+    </Register>
+    <Register Name="CONFIG_BOOST" Address="0x01" DataType="H" Size="1" LockBitMask="0x6F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="BOOST_ILIM1" Description="Boost cycle-by-cycle ILIM threshold"/>
+      <Bit Mask="0x0020" Name="BOOST_ILIM0" Description="Boost cycle-by-cycle ILIM threshold"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="FSW_BOOST3" Description="Boost switching frequency."/>
+      <Bit Mask="0x0004" Name="FSW_BOOST2" Description="Boost switching frequency."/>
+      <Bit Mask="0x0002" Name="FSW_BOOST1" Description="Boost switching frequency."/>
+      <Bit Mask="0x0001" Name="FSW_BOOST0" Description="Boost switching frequency."/>
+    </Register>
+    <Register Name="ILED_CONFIG1" Address="0x02" DataType="H" Size="1" LockBitMask="0xF3" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="FADING_SPEED3" Description="Fade speed intensity period."/>
+      <Bit Mask="0x0040" Name="FADING_SPEED2" Description="Fade speed intensity period."/>
+      <Bit Mask="0x0020" Name="FADING_SPEED1" Description="Fade speed intensity period."/>
+      <Bit Mask="0x0010" Name="FADING_SPEED0" Description="Fade speed intensity period."/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="IPEAK1" Description="IPEAK1:0 If OTP_FUNC_BOOST1 = 1 allows current mode control gain to be programmed If OTP_FUNC_BOOST1 = 0 current mode control is disabled"/>
+      <Bit Mask="0x0001" Name="IPEAK0" Description="IPEAK1:0 If OTP_FUNC_BOOST1 = 1 allows current mode control gain to be programmed If OTP_FUNC_BOOST1 = 0 current mode control is disabled"/>
+    </Register>
+    <Register Name="ILED_CONFIG2" Address="0x03" DataType="H" Size="1" LockBitMask="0x7F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="LOG_MODE" Description="Dimming mode selector."/>
+      <Bit Mask="0x0020" Name="DIM_MODE" Description="Dimming mode selection."/>
+      <Bit Mask="0x0010" Name="MAX_I4" Description="Maximum current per string."/>
+      <Bit Mask="0x0008" Name="MAX_I3" Description="Maximum current per string."/>
+      <Bit Mask="0x0004" Name="MAX_I2" Description="Maximum current per string."/>
+      <Bit Mask="0x0002" Name="MAX_I1" Description="Maximum current per string."/>
+      <Bit Mask="0x0001" Name="MAX_I0" Description="Maximum current per string."/>
+    </Register>
+    <Register Name="LEDEN" Address="0x04" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="LEDEN8" Description="LED string 8."/>
+      <Bit Mask="0x0040" Name="LEDEN7" Description="LED string 7."/>
+      <Bit Mask="0x0020" Name="LEDEN6" Description="LED string 6."/>
+      <Bit Mask="0x0010" Name="LEDEN5" Description="LED string 5."/>
+      <Bit Mask="0x0008" Name="LEDEN4" Description="LED string 4."/>
+      <Bit Mask="0x0004" Name="LEDEN3" Description="LED string 3."/>
+      <Bit Mask="0x0002" Name="LEDEN2" Description="LED string 2."/>
+      <Bit Mask="0x0001" Name="LEDEN1" Description="LED string 1."/>
+    </Register>
+    <Register Name="WLED_ISET_LSB" Address="0x05" DataType="H" Size="1" LockBitMask="0xFE" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">    
+      <Bit Mask="0x0080" Name="WLED_ISET3" Description="WLED output current"/>
+      <Bit Mask="0x0040" Name="WLED_ISET2" Description="WLED output current"/>
+      <Bit Mask="0x0020" Name="WLED_ISET1" Description="WLED output current"/>
+      <Bit Mask="0x0010" Name="WLED_ISET0" Description="WLED output current"/>
+      <Bit Mask="0x0008" Name="DITHER_LSB2" Description="Dither"/>
+      <Bit Mask="0x0004" Name="DITHER_LSB1" Description="Dither"/>
+      <Bit Mask="0x0002" Name="DITHER_LSB0" Description="Dither"/>
+      <Bit Mask="0x0001" Name="Reserved" Description="Reserved"/>
+    </Register>
+    <Register Name="WLED_ISET_MSB" Address="0x06" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="WLED_ISET11" Description="WLED output current"/>
+      <Bit Mask="0x0040" Name="WLED_ISET10" Description="WLED output current"/>
+      <Bit Mask="0x0020" Name="WLED_ISET9" Description="WLED output current"/>
+      <Bit Mask="0x0010" Name="WLED_ISET8" Description="WLED output current"/>
+      <Bit Mask="0x0008" Name="WLED_ISET7" Description="WLED output current"/>
+      <Bit Mask="0x0004" Name="WLED_ISET6" Description="WLED output current"/>
+      <Bit Mask="0x0002" Name="WLED_ISET5" Description="WLED output current"/>
+      <Bit Mask="0x0001" Name="WLED_ISET4" Description="WLED output current"/>
+    </Register>
+    <Register Name="ILED_CONFIG3" Address="0x07" DataType="H" Size="1" LockBitMask="0x7B" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="LED_SHORT_VTH1" Description="LED short detect threshold"/>
+      <Bit Mask="0x0020" Name="LED_SHORT_VTH0" Description="LED short detect threshold"/>
+      <Bit Mask="0x0010" Name="PWM_IX1" Description="Transition point between analog dimming and PWM dimming during mode change"/>
+      <Bit Mask="0x0008" Name="PWM_IX0" Description="Transition point between analog dimming and PWM dimming during mode change"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="PWM_DIM_FREQ1" Description="PWM Dim frequency"/>
+      <Bit Mask="0x0001" Name="PWM_DIM_FREQ0" Description="PWM Dim frequency"/>
+    </Register>
+    <Register Name="CONFIG_COMP" Address="0x08" DataType="H" Size="1" LockBitMask="0xC0" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="I2C_STANDBY" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="RESET" Description="Resets the device"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="Reserved" Description="Reserved"/>
+    </Register>
+	<Register Name="FILTER_SETTINGS" Address="0x09" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="DIMCODE1" Description="Brightness control method"/>
+      <Bit Mask="0x0040" Name="DIMCODE0" Description="Brightness control method"/>
+      <Bit Mask="0x0020" Name="DITHER ENABLE" Description="Enable dithering"/>
+      <Bit Mask="0x0010" Name="RCFILTER1" Description="Enables or disables the filter level - See datasheet"/>
+      <Bit Mask="0x0008" Name="RCFILTER0" Description="Enables or disables the filter level - See datasheet"/>
+      <Bit Mask="0x0004" Name="PWMFILTER2" Description="Enables or disables the PWM input filter - See datasheet"/>
+      <Bit Mask="0x0002" Name="PWMFILTER1" Description="Enables or disables the PWM input filter - See datasheet"/>
+      <Bit Mask="0x0001" Name="PWMFILTER0" Description="Enables or disables the PWM input filter - See datasheet"/>
+    </Register>
+	<Register Name="IMAXTUNE" Address="0x0A" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="LEDVREGCNTINIT8" Description="Initial starting target voltage preset code (upper 4 bits only)"/>
+      <Bit Mask="0x0040" Name="LEDVREGCNTINIT7" Description="Initial starting target voltage preset code (upper 4 bits only)"/>
+      <Bit Mask="0x0020" Name="LEDVREGCNTINIT6" Description="Initial starting target voltage preset code (upper 4 bits only)"/>
+      <Bit Mask="0x0010" Name="LEDVREGCNTINIT5" Description="Initial starting target voltage preset code (upper 4 bits only)"/>
+      <Bit Mask="0x0008" Name="IMAXTUNE3" Description="Sets percentage increase of LED full-scale current in aprox 0.51% steps."/>
+      <Bit Mask="0x0004" Name="IMAXTUNE2" Description="Sets percentage increase of LED full-scale current in aprox 0.51% steps."/>
+      <Bit Mask="0x0002" Name="IMAXTUNE1" Description="Sets percentage increase of LED full-scale current in aprox 0.51% steps."/>
+      <Bit Mask="0x0001" Name="IMAXTUNE0" Description="Sets percentage increase of LED full-scale current in aprox 0.51% steps."/>
+    </Register>
+	<Register Name="CONFIG_CP" Address="0x0B" DataType="H" Size="1" LockBitMask="0x0F" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="AUTO50_CP_FREQ" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="SEL_CP_FREQ" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="CP_FREQ_DIV1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="CP_FREQ_DIV0" Description="See datasheet"/>
+    </Register>
+	<Register Name="CHKSUMUSER0" Address="0x0C" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="CHKSUSR7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="CHKSUSR6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="CHKSUSR5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="CHKSUSR4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="CHKSUSR3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="CHKSUSR2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="CHKSUSR1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="CHKSUSR0" Description="See datasheet"/>
+    </Register>
+	<Register Name="CHKSUMUSER1" Address="0x0D" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="CHKSUSR15" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="CHKSUSR14" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="CHKSUSR13" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="CHKSUSR12" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="CHKSUSR11" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="CHKSUSR10" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="CHKSUSR9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="CHKSUSR8" Description="See datasheet"/>
+    </Register>	
+    <Register Name="STATUS1" Address="0x0E" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="BST_ILIM_SEC" Description="Secondary current limit."/>
+      <Bit Mask="0x0040" Name="VOUT_OVP" Description="Output over voltage."/>
+      <Bit Mask="0x0020" Name="VX_OV" Description="VX over voltage."/>
+      <Bit Mask="0x0010" Name="VX_UV" Description="VX under voltage."/>
+      <Bit Mask="0x0008" Name="DISC_OCP" Description="Disconnect over current."/>
+      <Bit Mask="0x0004" Name="TSD" Description="Thermal shutdown."/>
+      <Bit Mask="0x0002" Name="SS_TIMEOUT" Description="Soft start timeout."/>
+      <Bit Mask="0x0001" Name="LED_SHORT" Description="LED short circuit."/>	  
+    </Register>
+    <Register Name="STATUS2" Address="0x0F" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="True" Private="False" Description="See datasheet">
+      <Bit Mask="0x0080" Name="MTP_WRITE_CMD4" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="MTP_WRITE_CMD3" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="MTP_WRITE_CMD2" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="MTP_WRITE_CMD1" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="MTP_WRITE_CMD0" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="MTP_WRITE_DNE" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="CRCOK" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="LED_OPEN" Description="LED open circuit."/>
+    </Register>
+	<!-- Internal Registers -->
+	<Register Name="XCOORD" Address="0x10" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="X7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="X6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="X5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="X4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="X3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="X2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="X1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="X0" Description="See datasheet"/>
+    </Register>
+    <Register Name="YCOORD" Address="0x11" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0001" Name="Y7" Description="See datasheet"/>
+      <Bit Mask="0x0080" Name="Y6" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Y5" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Y4" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Y3" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Y2" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Y1" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Y0" Description="See datasheet"/>
+    </Register>
+    <Register Name="WAFERNUM" Address="0x12" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="WN7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="WN6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="WN5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="WN4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="WN3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="WN2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="WN1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="WN0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LOT1" Address="0x13" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="LOT7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="LOT6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="LOT5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="LOT4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="LOT3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="LOT2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="LOT1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="LOT0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LOT2" Address="0x14" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="LOT7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="LOT6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="LOT5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="LOT4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="LOT3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="LOT2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="LOT1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="LOT0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LOT3" Address="0x15" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="LOT7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="LOT6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="LOT5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="LOT4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="LOT3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="LOT2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="LOT1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="LOT0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LOT4" Address="0x16" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="LOT7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="LOT6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="LOT5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="LOT4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="LOT3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="LOT2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="LOT1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="LOT0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LEDVIOSTRIM" Address="0x17" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_FUNC_LED2" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_FUNC_LED1" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_FUNC_LED0" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="LEDvrefVios3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="LEDvrefVios2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="LEDvrefVios1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="LEDvrefVios0" Description="See datasheet"/>
+    </Register>
+    <Register Name="BGTEMPCOTRIM" Address="0x18" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_VREF_TC7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_VREF_TC6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_VREF_TC5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_VREF_TC4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_VREF_TC3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="Reserved" Description="Reserved"/>
+    </Register>
+    <Register Name="BGOFFTRIM" Address="0x19" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_VREF_OFFSET7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_VREF_OFFSET6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_VREF_OFFSET5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_VREF_OFFSET4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_VREF_OFFSET3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_VREF_OFFSET2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_VREF_OFFSET1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_VREF_OFFSET0" Description="See datasheet"/>
+    </Register>
+    <Register Name="BIASTRIM" Address="0x1A" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="CLK_UP1" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="CLK_UP0" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_IREF5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_IREF4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_IREF3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_IREF2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_IREF1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_IREF0" Description="See datasheet"/>
+    </Register>
+    <Register Name="OSCTRIM" Address="0x1B" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="CLK_DOWN1" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="CLK_DOWN0" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_OSC5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_OSC4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_OSC3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_OSC2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_OSC1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_OSC0" Description="See datasheet"/>
+    </Register>
+    <Register Name="FUNCOTPBST1" Address="0x1C" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_FUNC_BOOST7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_FUNC_BOOST6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_FUNC_BOOST5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_FUNC_BOOST4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_FUNC_BOOST3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_FUNC_BOOST2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_FUNC_BOOST1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_FUNC_BOOST0" Description="See datasheet"/>
+    </Register>
+    <Register Name="FUNCOTPBST2" Address="0x1D" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_FUNC_BOOST15" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_FUNC_BOOST14" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_FUNC_BOOST13" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_FUNC_BOOST12" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_FUNC_BOOST11" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_FUNC_BOOST10" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_FUNC_BOOST9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_FUNC_BOOST8" Description="See datasheet"/>
+    </Register>
+    <Register Name="FUNCOTPBST3" Address="0x1E" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="DOWN_FOLLOW_UP" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="UP_FOLLOW_DOWN" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="OTP_FUNC_BOOST17" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_FUNC_BOOST16" Description="See datasheet"/>
+    </Register>
+    <Register Name="BSTILIMTRIM" Address="0x1F" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_LOWCOST2" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_LOWCOST1" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_LOWCOST0" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_ILIM4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_ILIM3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_ILIM2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_ILIM1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_ILIM0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LEDREFTRIMINT" Address="0x20" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="SPEEDUP_INC" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="OTP_FADER" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="BLANK_LED_SHORT" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TBvref10X4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TBvref10X3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TBvref10X2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TBvref10X1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TBvref10X0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LEDREFTRIMEXT1" Address="0x21" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="DAC_SPEEDUP" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="DELAY_B" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="BLANK_LED_OPEN" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="Reserved" Description="Reserved"/>
+    </Register>
+    <Register Name="LEDREFTRIMEXT2" Address="0x22" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TBregv7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TBregv6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TBregv5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TBregv4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TBregv3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TBregv2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TBregv1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TBregv0" Description="See datasheet"/>
+    </Register>
+    <Register Name="LEDGAINTRIM1" Address="0x23" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TB_LEDgain7" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="TB_LEDgain6" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="TB_LEDgain5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TB_LEDgain4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TB_LEDgain3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TB_LEDgain2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TB_LEDgain1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TB_LEDgain0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="LEDGAINTRIM2" Address="0x24" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TB_LEDgain15" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TB_LEDgain14" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TB_LEDgain13" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TB_LEDgain12" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TB_LEDgain11" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TB_LEDgain10" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TB_LEDgain9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TB_LEDgain8" Description="See datasheet"/>
+    </Register>
+    <Register Name="LEDGAINTRIM3" Address="0x25" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TB_LEDgain23" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TB_LEDgain22" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TB_LEDgain21" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TB_LEDgain20" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TB_LEDgain19" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TB_LEDgain18" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TB_LEDgain17" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TB_LEDgain16" Description="See datasheet"/>
+    </Register>
+    <Register Name="LEDGAINTRIM4" Address="0x26" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TB_LEDgain31" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TB_LEDgain30" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TB_LEDgain29" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TB_LEDgain28" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TB_LEDgain27" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TB_LEDgain26" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TB_LEDgain25" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TB_LEDgain24" Description="See datasheet"/>
+    </Register>
+    <Register Name="LEDGAINTRIM5" Address="0x27" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TB_LEDgain39" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TB_LEDgain38" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TB_LEDgain37" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TB_LEDgain36" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TB_LEDgain35" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TB_LEDgain34" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TB_LEDgain33" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TB_LEDgain32" Description="See datasheet"/>
+    </Register>
+    <Register Name="FUNC_MISC_1" Address="0x28" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_GREG" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="OTP_WINDOW" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_UNDERREG" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="DIV24MUXSEL" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="DOWNCLKSEL" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="OTP_FDISC_DLY" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_WINDOW_DEB" Description="Reserved"/>
+    </Register>
+    <Register Name="FUNC_MISC_2" Address="0x29" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="BLANK_FLT_ILIM" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="BLANK_VX_UVLO" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Trim_VX_OV2" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Trim_VX_OV1" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="Trim_VX_OV0" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="Reserved" Description="Reserved"/>
+    </Register>
+    <Register Name="FUNC_MISC_3" Address="0x2A" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="TRIM_ID2" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TRIM_ID1" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TRIM_ID0" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="I2C_ADDRESS2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="I2C_ADDRESS1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="I2C_ADDRESS0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="FUNCOTPIO" Address="0x2B" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="OTP_SDASCL6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="OTP_SDASCL5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="OTP_SDASCL4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_SDASCL3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_SDASCL2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_SDASCL1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="Reserved" Description="Reserved"/>
+    </Register>
+    <Register Name="CPMODE1" Address="0x2C" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="OTP_CPMode4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="OTP_CPMode3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="OTP_CPMode2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="OTP_CPMode1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_CPMode0" Description="See datasheet"/>
+    </Register>
+    <Register Name="CPMODE2" Address="0x2D" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OTP_CP_FREQC" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="OTP_CPMode9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="OTP_CPMode8" Description="See datasheet"/>
+    </Register>
+    <Register Name="CHECKSUM1" Address="0x2E" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="CHKS7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="CHKS6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="CHKS5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="CHKS4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="CHKS3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="CHKS2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="CHKS1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="CHKS0" Description="See datasheet"/>
+    </Register>
+    <Register Name="CHECKSUM2" Address="0x2F" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="CHKS15" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="CHKS14" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="CHKS13" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="CHKS12" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="CHKS11" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="CHKS10" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="CHKS9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="CHKS8" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTOTP1" Address="0x30" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="MTPPROGTRIM" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="MTPPROGUSR" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="MTPERASEALL" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="MTPERASETRIM" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="MTPERASEUSR" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="MTPREADALL" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="MTPREADTRIM" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="MTPREADUSR" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTOTP2" Address="0x31" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OVERWRITE_CRC" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="IDXNOTINC" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="MTPPROGALL" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTREF" Address="0x32" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="CRCTRIMOKSTATUS" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TM_DIS_LDO" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="TM_BGOK" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="BLANK_TSD" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TM_TSD_65" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_TSD_DISABLE" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_UVLO" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTBST1" Address="0x33" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TM_BOOST7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TM_BOOST6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TM_BOOST5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TM_BOOST4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TM_BOOST3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TM_BOOST2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_BOOST1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_BOOST0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTBST2" Address="0x34" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TM_BOOST15" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="TM_BOOST10" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_BOOST9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_BOOST8" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTCP1" Address="0x35" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TM_CP" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TM_CP_SWON6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TM_CP_SWON5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TM_CP_SWON4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TM_CP_SWON3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TM_CP_SWON2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_CP_SWON1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_CP_SWON0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTCP2" Address="0x36" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TEST_CELL_CURRENT_MON_SEL" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TM_CP_ILEAK1" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TM_CP_ILEAK0" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TM_CP_RON" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TM_PH_SWON3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TM_PH_SWON2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_PH_SWON1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_PH_SWON0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTDISC1" Address="0x37" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="TM_DISC1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_DISC0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTPOWER1" Address="0x38" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="BYPASS_DELAYB" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="BLANK_VOUT_OVP" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="BLANK_VX_OVP" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="BLANK_PX_OK" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="BLANK_DISC" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="BLANK_ILIMcycle" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTPOWER2" Address="0x39" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="SIM" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="SPEEDUP" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="TM_FORCE_HOLD" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="DIS_CP" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="DIS_BOOST" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="DIS_DISC" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTMUX1" Address="0x3A" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TM_DMUX_SEL" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="TM_DMUX4_9" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TM_DMUX3_8" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TM_DMUX2_7" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_DMUX1_6" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_DMUX0_5" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTMUX2" Address="0x3B" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="TM_AMUX3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TM_AMUX2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_AMUX1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_AMUX0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTMUX3" Address="0x3C" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="DIG_PRE_MUX_SEL4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="DIG_PRE_MUX_SEL3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="DIG_PRE_MUX_SEL2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="DIG_PRE_MUX_SEL1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="DIG_PRE_MUX_SEL0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTMUX4" Address="0x3D" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TM_LED3" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="EN_PMUX_A1" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="EN_PMUX_A0" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="EN_PMUX_D3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="EN_PMUX_D2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="EN_PMUX_D1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="EN_PMUX_D0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTLED1" Address="0x3E" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TM_LED2" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TM_LED1" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TM_LED0" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TM_THERMCODE_EN" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TM_THERMCODE3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TM_THERMCODE2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_THERMCODE1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_THERMCODE0" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTLED3" Address="0x40" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="DISABLE_THRESHOLD" Description="See datasheet"/>
+    </Register>
+    <Register Name="TESTREGEN" Address="0x41" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="PASS7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="PASS6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="PASS5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="PASS4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="PASS3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="PASS2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="PASS1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="PASS0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="TESTIO" Address="0x42" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="TM_EXT_CLK" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="TM_IOTop2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TM_IOTop1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TM_IOTop0" Description="See datasheet"/>
+    </Register>
+    <Register Name="SCANEN" Address="0x43" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0004" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0002" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0001" Name="TM_ScanMode" Description="See datasheet"/>
+    </Register>
+    <Register Name="MTP_CMD0" Address="0x44" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="TEST_VREG_GATE_MON_OVR_EN" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TEST_VREG_MON_EN" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TEST_V1V_MON_OVR_EN" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TEST_OSC_MON_EN" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TEST_MARGIN_READ_EN" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TEST_CELL_CURRENT_MON_EN" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TEST_BULK_ODD_EN" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TEST_BULK_EVEN_EN" Description="See datasheet"/>
+    </Register>
+    <Register Name="MTP_CMD1" Address="0x45" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="OFFMTP" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="TEST_HV_BIAS_WEAK_RATIO_EN" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="TEST_VREG_VREF_MON_OVR_EN" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="TEST_CP_ENABLE" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="TEST_ERASE" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="TEST_PROG" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="TEST_READ" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TEST_IP_EN" Description="See datasheet"/>
+    </Register>	
+    <Register Name="MTP_TST" Address="0x46" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0008" Name="MARGIN_TRIM2" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="MARGIN_TRIM1" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="MARGIN_TRIM0" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="TESTMTP" Description="See datasheet"/>
+    </Register>	
+    <Register Name="ADDR_TEST" Address="0x47" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0040" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0020" Name="Reserved" Description="Reserved"/>
+      <Bit Mask="0x0010" Name="ADDR_TEST4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="ADDR_TEST3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="ADDR_TEST2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="ADDR_TEST1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="ADDR_TEST0" Description="See datasheet"/>
+    </Register>	
+    <Register Name="WR_DATA_TEST_LO" Address="0x48" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="WR_DATA_TEST7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="WR_DATA_TEST6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="WR_DATA_TEST5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="WR_DATA_TEST4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="WR_DATA_TEST3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="WR_DATA_TEST2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="WR_DATA_TEST1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="WR_DATA_TEST0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="WR_DATA_TEST_HI" Address="0x49" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="WR_DATA_TEST15" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="WR_DATA_TEST14" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="WR_DATA_TEST13" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="WR_DATA_TEST12" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="WR_DATA_TEST11" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="WR_DATA_TEST10" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="WR_DATA_TEST9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="WR_DATA_TEST8" Description="See datasheet"/>
+    </Register>		
+    <Register Name="RD_DATA_TEST_LO" Address="0x4A" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="RD_DATA_TEST7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="RD_DATA_TEST6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="RD_DATA_TEST5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="RD_DATA_TEST4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="RD_DATA_TEST3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="RD_DATA_TEST2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="RD_DATA_TEST1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="RD_DATA_TEST0" Description="See datasheet"/>
+    </Register>		
+    <Register Name="RD_DATA_TEST_HI" Address="0x4B" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="RD_DATA_TEST15" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="RD_DATA_TEST14" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="RD_DATA_TEST13" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="RD_DATA_TEST12" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="RD_DATA_TEST11" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="RD_DATA_TEST10" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="RD_DATA_TEST9" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="RD_DATA_TEST8" Description="See datasheet"/>
+    </Register>
+    <Register Name="MASKCODE" Address="0x4C" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="False" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="MASK7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="MASK6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="MASK5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="MASK4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="MASK3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="MASK2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="MASK1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="MASK0" Description="See datasheet"/>
+    </Register>
+	<Register Name="CHIP_ID" Address="0xFE" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="B7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="B6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="B5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="B4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="B3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="B2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="B1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="B0" Description="See datasheet"/>
+    </Register>
+    <Register Name="MFG_ID" Address="0xFF" DataType="H" Size="1" Format="X2" Unit="Hex" ReadOnly="True" Private="True" Description="See datasheet">
+      <Bit Mask="0x0080" Name="B7" Description="See datasheet"/>
+      <Bit Mask="0x0040" Name="B6" Description="See datasheet"/>
+      <Bit Mask="0x0020" Name="B5" Description="See datasheet"/>
+      <Bit Mask="0x0010" Name="B4" Description="See datasheet"/>
+      <Bit Mask="0x0008" Name="B3" Description="See datasheet"/>
+      <Bit Mask="0x0004" Name="B2" Description="See datasheet"/>
+      <Bit Mask="0x0002" Name="B1" Description="See datasheet"/>
+      <Bit Mask="0x0001" Name="B0" Description="See datasheet"/>
+    </Register>	
+  </Registers>
+</Device>
